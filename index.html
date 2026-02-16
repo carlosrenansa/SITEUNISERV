@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <script src="translations.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNISERV — O único sistema de serviço para sua empresa</title>
+  <meta name="description" content="Sistema de gestão tudo-em-um para empresas de serviços. Substitua planilhas e sistemas separados — integração frota, CRM, obras, financeiro e RH. Demonstração gratuita.">
+  <meta name="keywords" content="sistema de gestão empresas de serviços, substituir planilhas, integração frota CRM financeiro, gestão operacional, controle de frota, CRM para prestadores de serviço">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uniserv-blue: #003366;
+      --uniserv-blue-dark: #002244;
+      --uniserv-blue-light: #0055A4;
+      --uniserv-red: #C81E24;
+      --uniserv-red-bright: #e63946;
+      --uniserv-dark: #0f172a;
+      --uniserv-text: #1e293b;
+      --uniserv-muted: #64748b;
+      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.15);
+      --shadow-xl: 0 35px 60px -15px rgba(0,0,0,0.2);
+    }
+    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--uniserv-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Announcement bar (Netflix-style) */
+    .announcement-bar {
+      background: linear-gradient(90deg, var(--uniserv-red) 0%, var(--uniserv-red-bright) 100%);
+      color: white;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1001;
+    }
+    .announcement-bar { display: flex; align-items: center; justify-content: center; position: relative; }
+    .announcement-bar .announcement-content { flex: 1; text-align: center; padding-right: 120px; }
+    .announcement-bar a { text-decoration: underline; text-underline-offset: 3px; }
+    .announcement-bar .lang-wrapper { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 0.25rem; }
+    .announcement-bar .lang-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .announcement-bar .lang-btn:hover, .announcement-bar .lang-btn.active {
+      background: rgba(255,255,255,0.35);
+      border-color: white;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 44px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .logo-wrap { display: flex; align-items: center; }
+    .logo-img { height: 44px; width: auto; max-width: 200px; object-fit: contain; }
+    .logo-fallback { display: none; }
+    .nav { display: flex; gap: 2rem; align-items: center; }
+    .nav a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--uniserv-text);
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--uniserv-blue); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--uniserv-red) 0%, var(--uniserv-red-bright) 100%);
+      color: white;
+      box-shadow: 0 4px 20px rgba(198,30,36,0.4);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 30px rgba(198,30,36,0.5);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--uniserv-blue);
+      border: 2px solid var(--uniserv-blue);
+    }
+    .btn-outline:hover { background: rgba(0,51,102,0.08); }
+
+    /* Hero - Netflix-inspired dark & bold */
+    /* Hero: imagem de fundo — adicione hero-bg.jpg em IMAGENS/ para ativar */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 2rem 5rem;
+      background: linear-gradient(180deg, rgba(15,23,42,0.88) 0%, rgba(30,41,59,0.9) 40%, rgba(51,65,85,0.92) 100%),
+                  url('IMAGENS/capa%20dos%20profissionais.png') center/cover no-repeat;
+      background-color: #0f172a; /* fallback se a imagem não carregar */
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(198,30,36,0.15), transparent);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .hero-logo {
+      margin-bottom: 2rem;
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .hero-logo img { height: 90px; width: auto; max-width: 340px; object-fit: contain; }
+    .hero-tagline { font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 0.75rem; font-weight: 600; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: white;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.3);
+    }
+    .hero .tagline {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 620px;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .hero-benefits {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .hero-benefits span { display: flex; align-items: center; gap: 0.5rem; }
+    .hero-benefits span::before { content: "✓"; color: #4ade80; font-weight: bold; font-size: 1.1rem; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .hero-cta .btn { padding: 1.1rem 2.25rem; font-size: 1.05rem; }
+    .hero .btn-outline { color: white; border-color: rgba(255,255,255,0.6); }
+    .hero .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+    /* Prop box - chamativo */
+    .prop-box {
+      background: linear-gradient(135deg, var(--uniserv-red) 0%, var(--uniserv-red-bright) 100%);
+      color: white;
+      padding: 2.25rem 3rem;
+      border-radius: 20px;
+      max-width: 620px;
+      margin-top: 2rem;
+      box-shadow: 0 25px 60px rgba(198,30,36,0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
+      border: 1px solid rgba(255,255,255,0.2);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 25px 60px rgba(198,30,36,0.4), 0 0 0 1px rgba(255,255,255,0.1) inset; }
+      50% { box-shadow: 0 30px 70px rgba(198,30,36,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset; }
+    }
+    .prop-box h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; }
+    .prop-box p { opacity: 0.95; margin-bottom: 1.25rem; font-size: 1rem; }
+    .prop-box .btn {
+      background: white;
+      color: var(--uniserv-red);
+      font-weight: 700;
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .prop-box .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+
+    /* Form */
+    .form-section {
+      padding: 6rem 2rem;
+      max-width: 560px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+    }
+    .form-section h2 { font-size: 1.75rem; margin-bottom: 0.5rem; text-align: center; }
+    .form-section .form-desc { text-align: center; color: var(--uniserv-muted); margin-bottom: 2rem; }
+    .lead-form {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.1), 0 4px 20px rgba(0,51,102,0.08);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .lead-form label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--uniserv-dark);
+    }
+    .lead-form input, .lead-form select, .lead-form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      margin-bottom: 1.25rem;
+    }
+    .lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus {
+      outline: none;
+      border-color: var(--uniserv-blue);
+      box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+    }
+    .lead-form textarea { min-height: 100px; resize: vertical; }
+    .lead-form .btn {
+      width: 100%;
+      padding: 1.1rem;
+      font-size: 1.05rem;
+      margin-top: 0.5rem;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(198,30,36,0.35);
+    }
+    .lead-form .btn:hover { box-shadow: 0 8px 30px rgba(198,30,36,0.45); }
+
+    /* Features */
+    .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { text-align: center; font-size: 2.25rem; font-weight: 900; color: var(--uniserv-dark); margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+    .section-desc { text-align: center; color: var(--uniserv-muted); max-width: 600px; margin: 0 auto 3rem; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,51,102,0.15), 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(0,51,102,0.1) 0%, rgba(0,51,102,0.2) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .feature-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--uniserv-dark); }
+    .feature-card p { color: var(--uniserv-muted); font-size: 0.95rem; }
+
+    /* Module category cards */
+    .module-category {
+      background: white;
+      padding: 1.75rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .module-category:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,51,102,0.12), 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .module-category h3 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--uniserv-dark); display: flex; align-items: center; gap: 0.5rem; }
+    .module-category .module-list { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; }
+    .module-category .module-list span { font-size: 0.85rem; color: var(--uniserv-muted); background: #f1f5f9; padding: 0.25rem 0.6rem; border-radius: 6px; }
+
+    /* Solutions */
+    .solutions { background: var(--uniserv-dark); color: white; padding: 5rem 2rem; }
+    .solutions .section-title { color: white; }
+    .solutions .section-desc { color: rgba(255,255,255,0.75); }
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .solution-card {
+      background: rgba(255,255,255,0.08);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s ease;
+    }
+    .solution-card:hover {
+      background: rgba(255,255,255,0.14);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    .solution-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .solution-card p { font-size: 0.9rem; opacity: 0.85; }
+
+    /* Diferenciais */
+    .diffs { padding: 5rem 2rem; background: #f8fafc; }
+    .diffs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+    .diff-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .diff-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,51,102,0.12);
+    }
+    .diff-card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .diff-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .diff-card p { color: var(--uniserv-muted); font-size: 0.9rem; }
+
+    /* Testimonials */
+    .testimonials { padding: 5rem 2rem; background: white; }
+    .testimonial { max-width: 700px; margin: 0 auto; text-align: center; padding: 2rem; }
+    .testimonial blockquote { font-size: 1.2rem; font-style: italic; color: var(--uniserv-dark); margin-bottom: 1rem; }
+    .testimonial cite { color: var(--uniserv-muted); font-style: normal; }
+
+    /* CTA final */
+    .cta-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white;
+      position: relative;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(198,30,36,0.2), transparent);
+      pointer-events: none;
+    }
+    .cta-section > * { position: relative; z-index: 1; }
+    .cta-section h2 { font-size: 2rem; margin-bottom: 1rem; font-weight: 900; }
+    .cta-section p { opacity: 0.9; margin-bottom: 1.5rem; }
+    .cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .cta-section .btn { padding: 1.1rem 2.25rem; font-size: 1.05rem; }
+    .cta-section .btn[style*="background:white"] {
+      box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+    }
+    .cta-section .btn[style*="background:white"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,255,255,0.4);
+    }
+    .btn-whatsapp {
+      background: #25D366 !important;
+      color: white !important;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4) !important;
+    }
+    .btn-whatsapp:hover {
+      background: #20ba5a !important;
+      transform: translateY(-2px) scale(1.03) !important;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.5) !important;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 3rem 2rem;
+      background: var(--uniserv-dark);
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer a { color: rgba(255,255,255,0.9); }
+    .footer a:hover { text-decoration: underline; }
+    .footer-contact { margin-top: 1rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+
+    /* WhatsApp floating */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.12); box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* Intro bloc — Você sente isso? O UNISERV resolve */
+    .intro-block {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      text-align: center;
+    }
+    .intro-block h2 { font-size: 1.85rem; max-width: 640px; margin: 0 auto 0.5rem; line-height: 1.4; font-weight: 700; }
+    .intro-block .intro-cta { font-size: 1.4rem; font-weight: 800; color: #4ade80; margin-top: 0.75rem; }
+
+    /* Dores accordion — Dor → Consequência → Solução UNISERV */
+    .dores-section { padding: 4rem 2rem; background: #f8fafc; }
+    .dores-section .section-title { margin-bottom: 0.5rem; }
+    .dores-section .section-desc { margin-bottom: 2rem; }
+    .dores-accordion { max-width: 720px; margin: 0 auto; }
+    .dores-item {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .dores-item:hover { border-color: var(--uniserv-blue); box-shadow: 0 4px 20px rgba(0,51,102,0.08); }
+    .dores-item.open { border-color: var(--uniserv-blue); box-shadow: 0 6px 24px rgba(0,51,102,0.1); }
+    .dores-trigger {
+      width: 100%;
+      padding: 1.1rem 1.25rem;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--uniserv-dark);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+    .dores-trigger:hover { background: rgba(0,51,102,0.03); }
+    .dores-trigger .dores-icon { flex-shrink: 0; font-size: 1.2rem; }
+    .dores-trigger .dores-arrow { flex-shrink: 0; font-size: 1rem; color: var(--uniserv-muted); transition: transform 0.25s; }
+    .dores-item.open .dores-arrow { transform: rotate(180deg); color: var(--uniserv-blue); }
+    .dores-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out;
+    }
+    .dores-item.open .dores-content { max-height: 600px; transition: max-height 0.5s ease-in; }
+    .dores-inner {
+      padding: 0 1.25rem 1.25rem;
+      border-top: 1px solid #f1f5f9;
+    }
+    .dores-consequencia {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: #fef2f2;
+      border-left: 4px solid var(--uniserv-red);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      color: var(--uniserv-text);
+    }
+    .dores-consequencia strong { color: #991b1b; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .dores-solucao {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(135deg, rgba(0,51,102,0.06) 0%, rgba(0,51,102,0.1) 100%);
+      border-left: 4px solid var(--uniserv-blue);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+      color: var(--uniserv-text);
+    }
+    .dores-solucao strong { color: var(--uniserv-blue); font-size: 0.85rem; }
+    .dores-solucao ul { margin: 0.5rem 0 0 1rem; padding-left: 0; }
+    .dores-solucao li { margin-bottom: 0.25rem; }
+
+    /* Image placeholder */
+    .img-placeholder {
+      min-height: 320px;
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--uniserv-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 2rem;
+      border: 2px dashed #94a3b8;
+    }
+    .img-placeholder strong { display: block; margin-bottom: 0.5rem; color: var(--uniserv-dark); }
+
+    /* Video placeholder */
+    .video-placeholder {
+      min-height: 360px;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 2rem;
+      border: 2px dashed rgba(255,255,255,0.3);
+    }
+
+    /* Audience / Para quem é — layout por categorias e segmentos */
+    .audience { padding: 5rem 2rem; background: #f8fafc; }
+    .audience .section-desc { max-width: 640px; }
+    .audience-categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1100px; margin: 2rem auto 0; text-align: left; }
+    .audience-category-card {
+      background: white;
+      padding: 1.5rem 1.5rem 1.25rem;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .audience-category-card:hover { box-shadow: 0 8px 30px rgba(0,51,102,0.08); border-color: var(--uniserv-blue); }
+    .audience-category-card h3 { font-size: 1.05rem; color: var(--uniserv-dark); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; }
+    .audience-category-card .audience-cat-desc { font-size: 0.85rem; color: var(--uniserv-muted); line-height: 1.45; margin-bottom: 1rem; }
+    .audience-segments { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .audience-segments span {
+      display: inline-block;
+      font-size: 0.7rem;
+      color: var(--uniserv-blue);
+      background: rgba(0,51,102,0.08);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    /* Stats */
+    .stats { padding: 4rem 2rem; background: white; }
+    .stats-desc { margin-bottom: 1.5rem !important; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .stat-item strong { display: block; font-size: 2rem; color: var(--uniserv-blue); margin-bottom: 0.25rem; }
+    .stat-item span { font-size: 0.9rem; color: var(--uniserv-muted); }
+
+    /* Comparison table */
+    .comparison { padding: 5rem 2rem; background: #f8fafc; overflow-x: auto; }
+    .comparison table {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .comparison th, .comparison td { padding: 1rem 1.25rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    .comparison th {
+      background: linear-gradient(135deg, var(--uniserv-blue) 0%, var(--uniserv-blue-dark) 100%);
+      color: white;
+      font-weight: 700;
+    }
+    .comparison th:last-child {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+    .comparison tr:nth-child(even) td { background: rgba(0,51,102,0.03); }
+    .comparison tr:last-child td { border-bottom: none; }
+    .comparison .check { color: #22c55e; font-weight: bold; }
+    .comparison .cross { color: #ef4444; }
+    .comparison th:nth-child(2) { background: linear-gradient(135deg, #64748b 0%, #475569 100%); }
+
+    /* Planos (eGestor style) */
+    .plans-section { padding: 5rem 2rem; background: white; text-align: center; }
+    .plans-section .section-title { margin-bottom: 0.25rem; }
+    .plans-section .plans-subtitle { font-size: 1.15rem; color: var(--uniserv-muted); margin-bottom: 0.5rem; }
+    .plans-section .plans-desc { color: var(--uniserv-muted); max-width: 500px; margin: 0 auto 1.5rem; }
+    .plans-section .btn { padding: 1rem 2rem; }
+
+    /* Suporte grátis (eGestor style) */
+    .support-badge { padding: 4rem 2rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); text-align: center; }
+    .support-badge h2 { font-size: 1.75rem; color: var(--uniserv-dark); margin-bottom: 0.25rem; }
+    .support-badge p { font-size: 1.1rem; color: var(--uniserv-muted); }
+
+    /* Planos exclusivos banner */
+    .exclusive-banner { padding: 3rem 2rem; background: linear-gradient(135deg, var(--uniserv-blue) 0%, var(--uniserv-blue-dark) 100%); color: white; text-align: center; }
+    .exclusive-banner h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .exclusive-banner p { opacity: 0.9; margin-bottom: 1.25rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .exclusive-banner .btn { background: white; color: var(--uniserv-blue); }
+    .exclusive-banner .btn:hover { background: #f1f5f9; }
+
+    /* Cookie banner */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.98); color: white; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; z-index: 999; box-shadow: 0 -4px 20px rgba(0,0,0,0.2); }
+    .cookie-banner p { font-size: 0.9rem; margin: 0; }
+    .cookie-banner .cookie-btns { display: flex; gap: 0.75rem; }
+    .cookie-banner .cookie-btn { padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; }
+    .cookie-banner .cookie-accept { background: #22c55e; color: white; }
+    .cookie-banner .cookie-decline { background: transparent; border: 1px solid rgba(255,255,255,0.5); color: white; }
+    .cookie-banner.hidden { display: none; }
+
+    /* FAQ */
+    .faq { padding: 5rem 2rem; background: white; }
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 1.25rem 0;
+    }
+    .faq-item:first-child { padding-top: 0; }
+    .faq-item summary {
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; font-size: 1.25rem; color: var(--uniserv-blue); }
+    .faq-item[open] summary::after { content: "−"; }
+    .faq-item p { margin-top: 0.75rem; color: var(--uniserv-muted); font-size: 0.95rem; line-height: 1.6; }
+
+    /* Use case picker */
+    .use-cases { padding: 4rem 2rem; background: linear-gradient(180deg, #f8fafc 0%, white 100%); }
+    .use-case-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .use-case-chips a {
+      padding: 0.7rem 1.4rem;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--uniserv-dark);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .use-case-chips a:hover {
+      border-color: var(--uniserv-red);
+      color: var(--uniserv-red);
+      background: rgba(198,30,36,0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(198,30,36,0.15);
+    }
+
+    /* Video section */
+    .video-section { padding: 5rem 2rem; background: var(--uniserv-dark); color: white; }
+    .video-section .section-title { color: white; }
+    .video-section .section-desc { color: rgba(255,255,255,0.75); }
+    .video-wrapper {
+      max-width: 800px;
+      margin: 2rem auto 0;
+      aspect-ratio: 16/9;
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .video-placeholder {
+      text-align: center;
+      padding: 2rem;
+    }
+    .video-placeholder a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: var(--uniserv-red);
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: transform 0.2s;
+    }
+    .video-placeholder a:hover { transform: scale(1.03); }
+
+    /* Screenshot gallery - prints do sistema */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px;
+      margin: 2rem auto 0;
+    }
+    .screenshot-item {
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .screenshot-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .screenshot-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 220px;
+      object-fit: cover;
+    }
+    .screenshot-item span {
+      display: block;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.95);
+    }
+
+    /* Seção institucional / Quem atende */
+    .about-section { padding: 5rem 2rem; background: #f8fafc; }
+    .about-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; }
+    .about-photo { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,51,102,0.15); }
+    .about-photo img { width: 100%; height: auto; display: block; }
+    .about-text h2 { font-size: 1.75rem; margin-bottom: 1rem; color: var(--uniserv-dark); }
+    .about-text p { color: var(--uniserv-muted); margin-bottom: 1rem; line-height: 1.6; }
+    .about-trust-img { margin-top: 1.5rem; border-radius: 12px; overflow: hidden; max-width: 400px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .about-trust-img img { width: 100%; height: auto; display: block; }
+
+    /* Multiple testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .testimonial-card blockquote { font-size: 1rem; font-style: italic; color: var(--uniserv-dark); margin-bottom: 1rem; line-height: 1.6; }
+    .testimonial-card cite { font-style: normal; font-size: 0.9rem; color: var(--uniserv-muted); }
+
+    /* How it works */
+    .how-works { padding: 5rem 2rem; background: #f8fafc; }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 2rem auto 0;
+    }
+    .how-step {
+      text-align: center;
+      position: relative;
+    }
+    .how-step-num {
+      width: 48px;
+      height: 48px;
+      background: var(--uniserv-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      margin: 0 auto 1rem;
+    }
+    .how-step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .how-step p { font-size: 0.9rem; color: var(--uniserv-muted); }
+
+    /* Trust badges */
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      padding: 2rem;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--uniserv-text);
+    }
+
+    /* Mobile menu */
+    .menu-toggle { display: none; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; flex-direction: column; justify-content: center; gap: 6px; }
+    .menu-toggle span { display: block; width: 100%; height: 2px; background: var(--uniserv-dark); }
+    .mobile-nav { display: none; position: fixed; top: 0; right: 0; width: 280px; height: 100%; background: white; z-index: 1001; padding: 5rem 2rem 2rem; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 1rem 0; font-weight: 500; border-bottom: 1px solid #e2e8f0; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; }
+    .mobile-overlay.open { display: block; }
+
+    /* Footer expandido */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      text-align: left;
+    }
+    .footer-grid h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; opacity: 0.7; }
+    .footer-grid ul { list-style: none; }
+    .footer-grid li { margin-bottom: 0.5rem; }
+    .footer-grid a { font-size: 0.9rem; }
+
+    /* Animations */
+    .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* Logo strip */
+    .logo-strip { padding: 3rem 2rem; background: white; text-align: center; }
+    .logo-strip p { font-size: 0.9rem; color: var(--uniserv-muted); margin-bottom: 1rem; }
+    .logo-strip .logos { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; align-items: center; }
+    .logo-strip .logos img { height: 48px; width: auto; max-width: 140px; object-fit: contain; filter: grayscale(20%); opacity: 0.9; }
+
+    @media (max-width: 1024px) {
+      .header { padding: 1rem 1.5rem; }
+      .hero { padding: 8rem 1.5rem 4rem; }
+      .section { padding: 4rem 1.5rem; }
+      .solutions, .diffs, .pain-point, .stats, .audience, .plans-section, .support-badge, .exclusive-banner { padding: 4rem 1.5rem; }
+      .form-section { padding: 4rem 1.5rem; }
+      .lead-form { padding: 2rem; }
+      .section-title { font-size: 1.9rem; }
+      .comparison { padding: 4rem 1rem; }
+      .faq, .testimonials, .video-section { padding: 4rem 1.5rem; }
+      .cta-section { padding: 4rem 1.5rem; }
+      .how-works, .use-cases { padding: 4rem 1.5rem; }
+      .trust-badges { padding: 1.5rem; }
+      .footer { padding: 2.5rem 1.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      .announcement-bar { font-size: 0.8rem; padding: 0.5rem 0.75rem; min-height: 44px; }
+      .announcement-bar .announcement-content { padding-right: 100px; font-size: 0.75rem; }
+      .announcement-bar .lang-wrapper { right: 0.5rem; }
+      .announcement-bar .lang-btn { padding: 0.2rem 0.4rem; font-size: 0.9rem; }
+      .header { padding: 0.75rem 1rem; top: 44px; }
+      .logo-img { height: 36px; max-width: 140px; }
+      .nav { display: none; }
+      .menu-toggle { display: flex; }
+      .header .btn { padding: 0.6rem 1rem; font-size: 0.85rem; }
+      .hero { padding: 7rem 1rem 3rem; min-height: auto; }
+      .hero h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); margin-bottom: 1rem; }
+      .hero .tagline { font-size: 1rem; margin-bottom: 1.5rem; }
+      .hero-benefits { flex-direction: column; gap: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem; }
+      .hero-cta { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+      .hero-cta .btn { width: 100%; padding: 1rem 1.5rem; font-size: 0.95rem; }
+      .hero-logo { padding: 0.75rem 1rem; margin-bottom: 1.5rem; }
+      .hero-logo img { height: 50px; max-width: 220px; }
+      .prop-box { padding: 1.25rem 1.5rem; margin: 1.5rem 1rem 0; }
+      .prop-box h3 { font-size: 1.1rem; }
+      .prop-box p { font-size: 0.9rem; }
+      .prop-box .btn { padding: 0.9rem 1.5rem; }
+      .section { padding: 3rem 1rem; }
+      .section-title { font-size: 1.65rem; margin-bottom: 0.5rem; }
+      .section-desc { font-size: 0.95rem; margin-bottom: 2rem; }
+      .logo-strip { padding: 2rem 1rem; }
+      .pain-point { padding: 3rem 1rem; }
+      .pain-point h2 { font-size: 1.25rem; }
+      .pain-signs { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+      .pain-signs span { font-size: 0.85rem; }
+      .audience { padding: 3rem 1rem; }
+      .audience-categories { grid-template-columns: 1fr; gap: 1.25rem; }
+      .audience-category-card { padding: 1.25rem; }
+      .audience-segments span { font-size: 0.65rem; padding: 0.2rem 0.5rem; }
+      .plans-section, .support-badge { padding: 3rem 1rem; }
+      .exclusive-banner { padding: 2rem 1rem; }
+      .exclusive-banner h3 { font-size: 1.2rem; }
+      .exclusive-banner p { font-size: 0.95rem; }
+      .support-badge h2 { font-size: 1.5rem; }
+      .cookie-banner { flex-direction: column; padding: 1rem; text-align: center; }
+      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .about-photo { max-width: 320px; margin: 0 auto; }
+      .screenshots-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .screenshot-item img { max-height: 180px; }
+      .logo-strip .logos img { max-height: 40px; }
+      .pain-point p { font-size: 0.95rem; }
+      .stats { padding: 3rem 1rem; }
+      .stats-grid { gap: 1.5rem; }
+      .stat-item strong { font-size: 1.75rem; }
+      .use-cases { padding: 3rem 1rem; }
+      .use-case-chips { gap: 0.5rem; }
+      .use-case-chips a { padding: 0.6rem 1rem; font-size: 0.85rem; }
+      .form-section { padding: 3rem 1rem; }
+      .form-section h2 { font-size: 1.5rem; }
+      .lead-form { padding: 1.5rem; border-radius: 16px; }
+      .lead-form label { font-size: 0.85rem; }
+      .lead-form input, .lead-form select, .lead-form textarea { padding: 0.65rem 0.9rem; font-size: 16px; }
+      .comparison { padding: 3rem 0.75rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .comparison table { font-size: 0.75rem; min-width: 480px; }
+      .comparison th, .comparison td { padding: 0.5rem 0.4rem; }
+      .features-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .module-category { padding: 1.25rem; }
+      .module-category h3 { font-size: 1rem; }
+      .module-category .module-list span { font-size: 0.8rem; padding: 0.2rem 0.5rem; }
+      .solutions { padding: 3rem 1rem; }
+      .solutions-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .solution-card { padding: 1.5rem; }
+      .how-works { padding: 3rem 1rem; }
+      .how-steps { grid-template-columns: 1fr; gap: 2rem; }
+      .how-step-num { width: 40px; height: 40px; font-size: 1.1rem; }
+      .diffs { padding: 3rem 1rem; }
+      .diffs-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .diff-card { padding: 1.5rem; }
+      .video-section { padding: 3rem 1rem; }
+      .video-wrapper { margin: 1.5rem 1rem 0; }
+      .video-placeholder p { font-size: 0.95rem; }
+      .video-placeholder a { padding: 0.9rem 1.5rem; font-size: 0.9rem; }
+      .testimonials { padding: 3rem 1rem; }
+      .testimonials-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .testimonial-card { padding: 1.5rem; }
+      .testimonial-card blockquote { font-size: 0.95rem; }
+      .faq { padding: 3rem 1rem; }
+      .faq-item summary { font-size: 0.95rem; }
+      .faq-item p { font-size: 0.9rem; }
+      .cta-section { padding: 3rem 1rem; }
+      .cta-section h2 { font-size: 1.5rem; }
+      .cta-section p { margin-bottom: 1.25rem; }
+      .cta-buttons { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+      .cta-section .btn { width: 100%; }
+      .trust-badges { flex-direction: column; gap: 0.75rem; padding: 1.25rem; }
+      .trust-badge { font-size: 0.9rem; }
+      .footer { padding: 2rem 1rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+      .footer-contact { flex-direction: column; gap: 0.5rem; }
+      .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+      .whatsapp-float svg { width: 24px; height: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .announcement-bar .announcement-content { padding-right: 90px; font-size: 0.7rem; }
+      .header .btn { font-size: 0.8rem; padding: 0.5rem 0.75rem; }
+      .hero h1 { font-size: 1.5rem; }
+      .hero .tagline { font-size: 0.95rem; }
+      .hero-logo img { height: 44px; max-width: 180px; }
+      .prop-box { padding: 1rem 1.25rem; margin: 1rem 0.75rem 0; }
+      .section-title { font-size: 1.45rem; }
+      .pain-point h2 { font-size: 1.15rem; }
+      .comparison table { min-width: 380px; font-size: 0.7rem; }
+      .cta-section h2 { font-size: 1.35rem; }
+      .whatsapp-float { width: 48px; height: 48px; bottom: 16px; right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de anúncio + seletor de idiomas -->
+  <div class="announcement-bar">
+    <span class="announcement-content" id="i18n-announcement"></span>
+    <div class="lang-wrapper">
+      <button class="lang-btn active" data-lang="pt" title="Português" aria-label="Português">🇧🇷</button>
+      <button class="lang-btn" data-lang="en" title="English" aria-label="English">🇺🇸</button>
+      <button class="lang-btn" data-lang="es" title="Español" aria-label="Español">🇪🇸</button>
+      <button class="lang-btn" data-lang="fr" title="Français" aria-label="Français">🇫🇷</button>
+    </div>
+  </div>
+  <a href="https://wa.me/5591991863535?text=Olá! Vi o site do UNISERV e gostaria de saber mais." class="whatsapp-float" title="Fale conosco no WhatsApp" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <header class="header">
+    <a href="#" class="logo-wrap">
+      <img src="assets/logo-uniserv.png" alt="UNISERV - O único sistema de serviço" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'"/>
+      <span class="logo-fallback" style="display:none; font-weight:800; font-size:1.5rem; color:#003366;">UNI<span style="color:#C81E24">SERV</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#dores" data-i18n="nav_dores">Você sente isso?</a>
+      <a href="#funcionalidades" data-i18n="nav_features">Funcionalidades</a>
+      <a href="#contato" data-i18n="nav_plans">Planos</a>
+      <a href="#como-funciona" data-i18n="nav_how">Como funciona</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="#contato" data-i18n="nav_contact">Fale comigo</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#contato" class="btn btn-primary" data-i18n="cta_whatsapp">Falar no WhatsApp</a>
+  </header>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#dores" class="nav-close" data-i18n="nav_dores">Você sente isso?</a>
+    <a href="#funcionalidades" class="nav-close" data-i18n="nav_features">Funcionalidades</a>
+    <a href="#contato" class="nav-close" data-i18n="nav_plans">Planos</a>
+    <a href="#como-funciona" class="nav-close" data-i18n="nav_how">Como funciona</a>
+    <a href="#faq" class="nav-close" data-i18n="nav_faq">FAQ</a>
+    <a href="#contato" class="nav-close" data-i18n="nav_contact">Fale comigo</a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-logo">
+        <img src="assets/logo-uniserv.png" alt="UNISERV - O único sistema de serviço" onerror="this.src='assets/logo-simple.svg'"/>
+      </div>
+      <h1 data-i18n="hero_title">O sistema que transforma caos operacional em gestão inteligente.</h1>
+      <img src="IMAGENS/Dashboard.png" alt="Dashboard do UNISERV — frota, demandas e financeiro integrados" class="hero-img" style="max-width:900px; width:100%; height:auto; margin:2.5rem auto 0; display:block; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+    </section>
+
+    <!-- Intro: Você sente isso? O UNISERV resolve -->
+    <section class="intro-block animate-on-scroll" id="intro">
+      <h2 data-i18n="intro_title">Você sente isso na sua empresa?</h2>
+      <p class="intro-cta" data-i18n="intro_cta">O UNISERV resolve.</p>
+    </section>
+
+    <!-- Seção Dores — Accordion (Dor → Consequência → Solução UNISERV) -->
+    <section id="dores" class="dores-section animate-on-scroll">
+      <h2 class="section-title" data-i18n="dores_title">Você sente isso na sua empresa?</h2>
+      <p class="section-desc" data-i18n="dores_desc">Clique em cada dor para ver como o UNISERV resolve.</p>
+      <div class="dores-accordion">
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Falta de informação rápida faz você perder tempo?</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> decisões erradas, retrabalho e perda de dinheiro.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Dashboards inteligentes com visão completa da empresa em tempo real: financeiro, demandas, pessoas, custos e desempenho — tudo em um só painel.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Não quero um sistema para cada empresa minha</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> dados espalhados, erros e falta de visão do grupo.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Multiempresa e multifilial — gerencie todas as suas empresas em um único sistema e banco de dados, com total separação e controle.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Não sei o custo real dos meus serviços e demandas</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> você vende errado, lucra menos ou trabalha no prejuízo.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Controle completo de precificação: custos, margem, descontos, lucro e rentabilidade por serviço, contrato ou demanda.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Minha equipe se perde no que precisa ser feito</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> atrasos, falhas, desgaste com clientes e retrabalho.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Gestão clara por tipos: Demanda, Agenda, Checklist, Consulta, Visita, Helpdesk. Cada colaborador sabe o que fazer, quando e como.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Entregam menos ou entregam mais do que foi contratado</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> prejuízo, desgaste e perda de cliente.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Controle total: Contratado, Entregue, Não entregue, Retrabalhado — com custos, tempo, desvios e histórico completo.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Meu financeiro é um caos</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> você não sabe se a empresa dá lucro ou prejuízo.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Plano de contas, centro de custos, orçamento, contas a pagar e receber, conciliação bancária, DRE, DFC — você passa a ter o dinheiro da empresa na mão.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Estou perdido no RH e no DP</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> riscos trabalhistas e desorganização.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Faltas, férias, ponto, advertências, acidentes, documentos, entrevistas, benefícios, aniversariantes — tudo organizado, histórico e rastreável.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Almoxarifado sem controle</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> compras erradas, desperdício e sumiço de material.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Múltiplos almoxarifados, entrada/saída, requisição de peças e obras, estoque em obra, autorizações e rastreabilidade.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Frota sem controle</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> custos invisíveis e prejuízo constante.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Abastecimento, multas, sinistros, manutenção, pneus, documentação, aluguel, monitoramento de rota (Sascar).</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Perda de prazos e visitas não realizadas</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> clientes insatisfeitos e contratos cancelados.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Gestão total do tempo: Kanban, Lista, Calendário, Timeline, controle de pausas. Você prevê problemas antes que aconteçam.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Não sei quem realmente trabalha na equipe</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> você paga errado e mantém pessoas improdutivas.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Gamificação e performance: ranking de colaboradores com dados reais de entrega, tempo e resultado.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Conversas espalhadas em WhatsApp pessoal</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> perda de histórico, riscos e desorganização.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>UniChat: chat interno integrado às demandas, tudo registrado, centralizado e seguro.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Cliente diz que não tem resultado</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> você perde contratos sem ser o culpado.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Prognóstico, Desempenho de Competência e Pauta de Reunião. Você prova com dados onde está o problema.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Obras sem controle</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Geolocalização, demandas e checklists, requisição de material, estoque de obra, segurança do trabalho.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Equipe comercial sem acompanhamento</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>CRM completo: funil, pipeline, leads, contatos, NPS e histórico comercial.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Treinamentos não se mantêm no tempo</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-consequencia"><strong>Consequência:</strong> você vive recomeçando do zero.</p><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Uniteca + Unimovie: manuais, POPs, regras, vídeos, controle de quem viu e revisões periódicas.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Dependência de pessoas-chave</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Processos documentados, históricos e rastreáveis.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Falta de histórico para auditoria ou fiscalização</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Tudo registrado, com logs e rastreabilidade.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Crescimento sem estrutura</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Sistema que cresce junto com a empresa.</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Dono refém da operação</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Visão gerencial sem precisar "apagar incêndio".</p></div></div>
+        </div>
+        <div class="dores-item" data-dores>
+          <button class="dores-trigger" type="button"><span class="dores-icon">❌</span><span>Falta de padronização</span><span class="dores-arrow">▼</span></button>
+          <div class="dores-content"><div class="dores-inner"><p class="dores-solucao"><strong>Solução UNISERV</strong><br>Processos, checklists e regras centralizadas.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Placeholder de vídeo: Clientes falando do sistema -->
+    <section class="section animate-on-scroll" style="padding:3rem 2rem; background:#0f172a; color:white;">
+      <h2 class="section-title" style="font-size:1.25rem; margin-bottom:1.5rem; color:white;">O que dizem nossos clientes</h2>
+      <div class="video-placeholder" style="max-width:720px; margin:0 auto;">
+        <div><strong>Vídeo necessário</strong><br>Depoimento de cliente(s) falando do UNISERV — formato vertical ou horizontal, 30s a 2min</div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta-section animate-on-scroll">
+      <h2 data-i18n="cta_final_title">UNISERV não é apenas um sistema.</h2>
+      <p data-i18n="cta_final_desc">É a estrutura que sua empresa precisa para crescer com controle.</p>
+      <div class="cta-buttons">
+        <a href="#contato" class="btn" style="background:white; color:var(--uniserv-dark);" data-i18n="hero_cta_demo">Quero uma demonstração grátis</a>
+        <a href="https://wa.me/5591991863535?text=Olá! Vi o site do UNISERV e gostaria de saber mais." class="btn btn-whatsapp" target="_blank" rel="noopener" data-i18n="cta_whatsapp">Falar no WhatsApp</a>
+      </div>
+    </section>
+
+    <!-- Formulário de qualificação de leads -->
+    <section id="contato" class="form-section animate-on-scroll">
+      <h2 data-i18n="form_title">Converse comigo</h2>
+      <p class="form-desc" data-i18n="form_desc">Preencha o formulário e eu te respondo rapidinho no WhatsApp ou por e-mail.</p>
+      <p class="form-cta" style="text-align:center;font-weight:600;color:var(--uniserv-blue);margin-bottom:1.5rem;font-size:1rem;"><span data-i18n="form_cta">Agende uma consultoria gratuita de 15 min para mapear seu processo.</span></p>
+      <form class="lead-form" action="https://formsubmit.co/rlconsultoriaexecutiva@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Novo lead UNISERV - Site">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="obrigado.html">
+        <input type="text" name="_honey" style="display:none">
+        <label for="nome" data-i18n="form_name">Nome completo *</label>
+        <input type="text" id="nome" name="name" required data-i18n-placeholder="form_name_ph" placeholder="Seu nome">
+        <label for="email" data-i18n="form_email">E-mail *</label>
+        <input type="email" id="email" name="email" required data-i18n-placeholder="form_email_ph" placeholder="seu@email.com">
+        <label for="telefone" data-i18n="form_phone">Telefone / WhatsApp *</label>
+        <input type="tel" id="telefone" name="telefone" required data-i18n-placeholder="form_phone_ph" placeholder="(91) 99186-3535">
+        <label for="empresa" data-i18n="form_company">Nome da empresa</label>
+        <input type="text" id="empresa" name="empresa" data-i18n-placeholder="form_company_ph" placeholder="Sua empresa">
+        <label for="interesse" data-i18n="form_interest">Qual seu principal interesse?</label>
+        <select id="interesse" name="interesse">
+          <option value="" data-i18n="form_select">Selecione...</option>
+          <option value="Demonstração" data-i18n="form_opt1">Quero ver uma demonstração</option>
+          <option value="Preços" data-i18n="form_opt2">Quero saber sobre preços</option>
+          <option value="Dúvidas" data-i18n="form_opt3">Tenho dúvidas sobre o sistema</option>
+          <option value="Parceria" data-i18n="form_opt4">Quero ser parceiro/revendedor</option>
+          <option value="Outro" data-i18n="form_opt5">Outro</option>
+        </select>
+        <label for="mensagem" data-i18n="form_message">Mensagem (opcional)</label>
+        <textarea id="mensagem" name="mensagem" data-i18n-placeholder="form_message_ph" placeholder="Conte um pouco sobre sua necessidade..."></textarea>
+        <button type="submit" class="btn btn-primary" data-i18n="form_submit">Enviar e falar no WhatsApp</button>
+      </form>
+    </section>
+
+    <section id="funcionalidades" class="section animate-on-scroll">
+      <h2 class="section-title" data-i18n="features_title">Tudo que você precisa em um só lugar</h2>
+      <p class="section-desc" data-i18n="features_desc">Mais de 50 recursos integrados — sem precisar de vários sistemas diferentes.</p>
+      <div class="features-grid">
+        <article class="module-category">
+          <h3>📋 Cadastros Gerais</h3>
+          <div class="module-list">
+            <span>Contratados</span><span>Contratantes</span><span>Filiais</span><span>Responsáveis</span><span>Tipos de serviço</span><span>Serviço</span><span>Demanda</span><span>Dados financeiros</span><span>Controle e geração de contratos</span><span>Competências</span><span>Veículos e máquinas</span><span>Equipamentos</span><span>Rotas</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>💰 Financeiro</h3>
+          <div class="module-list">
+            <span>Movimentação financeira</span><span>Agenda de despesas e receitas</span><span>DFC (fluxo de caixa)</span><span>DRE</span><span>Controle patrimonial</span><span>Importação OFX</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>🚗 Gestão de Frota</h3>
+          <div class="module-list">
+            <span>Abastecimento</span><span>Check-in/Check-out</span><span>Documentação de veículos</span><span>Multas e sinistros</span><span>Manutenção e OS</span><span>Controle de aluguel de veículos e máquinas</span><span>Controle de pneu</span><span>Lucro por veículo</span><span>Monitoramento de rota</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>📊 CRM</h3>
+          <div class="module-list">
+            <span>Dashboard</span><span>Prospects</span><span>Pipeline</span><span>Interações</span><span>Orçamentos</span><span>NPS</span><span>Configurações</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>🏗️ Obras</h3>
+          <div class="module-list">
+            <span>Execução e OS</span><span>Dashboard</span><span>Segurança do trabalho</span><span>Planejamento e execução</span><span>Materiais em obra</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>📦 Almoxarifado</h3>
+          <div class="module-list">
+            <span>Cadastros</span><span>Produtos</span><span>Movimentações</span><span>Requisições de compra</span><span>Curva ABC</span><span>Controle de validade</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>👥 Serviços e Operação</h3>
+          <div class="module-list">
+            <span>Controle de demanda</span><span>Demandas do cliente</span><span>Gamificação</span><span>UniChat (chat interno)</span><span>Integração WhatsApp</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>🎯 Desempenho e Competências</h3>
+          <div class="module-list">
+            <span>Prognóstico</span><span>Desempenho de funcionários</span><span>Ata de reunião</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>👔 Departamento Pessoal</h3>
+          <div class="module-list">
+            <span>Ponto eletrônico</span><span>Gestão de colaboradores</span><span>Departamento pessoal</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>📚 Uniteca e Unimovie</h3>
+          <div class="module-list">
+            <span>Universidade corporativa</span><span>Biblioteca de vídeos</span><span>Videoaulas</span>
+          </div>
+        </article>
+        <article class="module-category">
+          <h3>⚙️ Administração</h3>
+          <div class="module-list">
+            <span>Permissões</span><span>Parâmetros</span><span>Configurações</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Planos exclusivos (estilo eGestor) -->
+    <section class="exclusive-banner animate-on-scroll">
+      <h3 data-i18n="exclusive_title">Planos exclusivos para empresas de serviços</h3>
+      <p data-i18n="exclusive_desc">Com o UNISERV você centraliza frota, CRM, obras, financeiro e RH em um só lugar. Planos sob medida para o tamanho da sua operação.</p>
+      <a href="#contato" class="btn" data-i18n="exclusive_cta">Quero conhecer os planos</a>
+    </section>
+
+    <section id="solucoes" class="solutions animate-on-scroll">
+      <h2 class="section-title" data-i18n="solutions_title">Feito para cada área da sua empresa</h2>
+      <p class="section-desc" data-i18n="solutions_desc">Operação, vendas, manutenção, administrativo e gestão — tudo conectado.</p>
+      <div class="audience-categories">
+        <div class="audience-category-card">
+          <h3>🎨 <span data-i18n="audience_cat1_title">Agências e Criativos</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat1_desc">Prazos, aprovações e arquivos centralizados. Menos refação, mais clareza.</p>
+          <div class="audience-segments">
+            <span>Marketing Digital</span><span>Publicidade</span><span>Produtoras de Vídeo</span><span>Social Media</span><span>Design Gráfico</span><span>Arquitetura</span><span>Eventos e Casamentos</span><span>Copywriters</span><span>Influenciadores</span><span>Relações Públicas</span>
+          </div>
+        </div>
+        <div class="audience-category-card">
+          <h3>💻 <span data-i18n="audience_cat2_title">Tecnologia e Desenvolvimento</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat2_desc">Projetos, sprints e operação em um lugar. Integração sem complicação.</p>
+          <div class="audience-segments">
+            <span>SaaS / Startups</span><span>Software Houses</span><span>Devs Freelancers</span><span>Product Managers</span><span>Consultoria TI</span><span>Apps</span><span>E-commerce</span><span>Tráfego Pago</span><span>SEO</span><span>Games</span>
+          </div>
+        </div>
+        <div class="audience-category-card">
+          <h3>📋 <span data-i18n="audience_cat3_title">Serviços Profissionais</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat3_desc">Vários clientes ou processos: financeiro, prazos e documentos em um só sistema.</p>
+          <div class="audience-segments">
+            <span>Advocacia</span><span>Contabilidade</span><span>Consultores</span><span>Recrutamento</span><span>Corretores</span><span>Tradutores</span><span>Psicólogos e Clínicas</span><span>Nutricionistas</span><span>Personal Trainers</span><span>Coaches e Mentores</span>
+          </div>
+        </div>
+        <div class="audience-category-card">
+          <h3>📚 <span data-i18n="audience_cat4_title">Educação e Conhecimento</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat4_desc">Turmas, conteúdo e acompanhamento em um lugar. Menos dispersão.</p>
+          <div class="audience-segments">
+            <span>Cursos Online</span><span>Infoprodutores</span><span>Escolas de Idiomas</span><span>Coordenadores Pedagógicos</span><span>Pós-graduação</span><span>Treinamentos Corporativos</span><span>Editoras</span>
+          </div>
+        </div>
+        <div class="audience-category-card">
+          <h3>🏗️ <span data-i18n="audience_cat5_title">Engenharia e Operações</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat5_desc">Cronograma, canteiro, frota e custos integrados. Controle de ponta a ponta.</p>
+          <div class="audience-segments">
+            <span>Construtoras</span><span>Incorporadoras</span><span>Engenharia Civil</span><span>Logística e Frete</span><span>Oficinas Mecânicas</span><span>Indústria</span><span>Energia Solar</span>
+          </div>
+        </div>
+        <div class="audience-category-card">
+          <h3>🏢 <span data-i18n="audience_cat6_title">Varejo, Saúde e Outros</span></h3>
+          <p class="audience-cat-desc" data-i18n="audience_cat6_desc">Padronização, estoque, agenda ou prestação de contas em um só lugar.</p>
+          <div class="audience-segments">
+            <span>Franqueados</span><span>Eventos Corporativos</span><span>ONGs</span><span>Laboratórios</span><span>BPO Financeiro</span><span>Síndicos</span><span>Assistentes Virtuais</span><span>Planejadores Financeiros</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Como funciona (Notion/Trello style) -->
+    <section id="como-funciona" class="how-works animate-on-scroll">
+      <h2 class="section-title" data-i18n="how_title">Como funciona</h2>
+      <p class="section-desc" data-i18n="how_desc">Três passos para começar.</p>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-step-num">1</div>
+          <h3 data-i18n="how_step1">Preencha o formulário</h3>
+          <p data-i18n="how_step1_p">Conte sua necessidade e eu entro em contato em até 24h.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">2</div>
+          <h3 data-i18n="how_step2">Demo personalizada</h3>
+          <p data-i18n="how_step2_p">Te mostro o sistema na prática, focando no que sua empresa precisa.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">3</div>
+          <h3 data-i18n="how_step3">Comece a usar</h3>
+          <p data-i18n="how_step3_p">Configuração e treinamento para sua equipe começarem rapidinho.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="diffs animate-on-scroll">
+      <h2 class="section-title" data-i18n="diffs_title">Por que escolher o UNISERV?</h2>
+      <div class="diffs-grid">
+        <div class="diff-card">
+          <div class="icon">✓</div>
+          <h3 data-i18n="diff1_title">Integração total</h3>
+          <p data-i18n="diff1_p">Todos os módulos conversam entre si — sem duplicar dados.</p>
+        </div>
+        <div class="diff-card">
+          <div class="icon">⚡</div>
+          <h3 data-i18n="diff2_title">Implementação rápida</h3>
+          <p data-i18n="diff2_p">Configure e comece a usar em pouco tempo, com suporte dedicado.</p>
+        </div>
+        <div class="diff-card">
+          <div class="icon">🇧🇷</div>
+          <h3 data-i18n="diff3_title">100% brasileiro</h3>
+          <p data-i18n="diff3_p">Desenvolvido no Brasil, para a realidade das empresas brasileiras.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galeria: prints do sistema UNISERV -->
+    <section class="video-section animate-on-scroll">
+      <h2 class="section-title" data-i18n="video_title">Veja o UNISERV em ação</h2>
+      <p class="section-desc" data-i18n="video_desc">Demonstração do sistema na prática.</p>
+      <div class="screenshots-grid">
+        <div class="screenshot-item">
+          <img src="IMAGENS/Dashboard.png" alt="Dashboard UNISERV" loading="lazy">
+          <span>Dashboard</span>
+        </div>
+        <div class="screenshot-item">
+          <img src="IMAGENS/Pipeline%20do%20CRM.png" alt="Pipeline do CRM" loading="lazy">
+          <span>Pipeline do CRM</span>
+        </div>
+        <div class="screenshot-item">
+          <img src="IMAGENS/Controle%20de%20Demanda.png" alt="Controle de Demanda" loading="lazy">
+          <span>Controle de Demanda</span>
+        </div>
+        <div class="screenshot-item">
+          <img src="IMAGENS/DRE.png" alt="DRE" loading="lazy">
+          <span>DRE</span>
+        </div>
+        <div class="screenshot-item">
+          <img src="IMAGENS/UniChat.png" alt="UniChat" loading="lazy">
+          <span>UniChat</span>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:1.5rem;">
+        <a href="#contato" class="btn btn-primary" data-i18n="video_btn">Agendar demonstração ao vivo</a>
+      </p>
+    </section>
+
+    <!-- Quem atende / Institucional -->
+    <section id="sobre" class="about-section animate-on-scroll">
+      <div class="about-inner">
+        <div class="about-photo">
+          <img src="IMAGENS/foto%20renan%20fundo%20azul.png" alt="Renan - Grupo Executiva" loading="lazy">
+        </div>
+        <div class="about-text">
+          <h2 data-i18n="about_title">Quem atende você</h2>
+          <p data-i18n="about_text">O UNISERV é apresentado pelo Grupo Executiva — investimentos, gestão estratégica e soluções para empresas. Conte com suporte em português e implementação sob medida.</p>
+          <div class="about-trust-img">
+            <img src="IMAGENS/Muita%20gente%20confia%20na%20equipe.png" alt="Muita gente confia na equipe" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (Trello/Monday style) -->
+    <section id="faq" class="faq animate-on-scroll">
+      <h2 class="section-title" data-i18n="faq_title">Perguntas frequentes</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary data-i18n="faq1_q">O que está incluído na demonstração?</summary>
+          <p data-i18n="faq1_a">Uma chamada personalizada onde mostro o sistema funcionando, focando nos módulos que fazem sentido para sua empresa. Sem compromisso.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq2_q">Quanto tempo leva para começar a usar?</summary>
+          <p data-i18n="faq2_a">Depende do tamanho da operação. Empresas menores podem começar em poucos dias. Fazemos a configuração inicial e treinamento da equipe.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq3_q">Preciso usar todos os módulos?</summary>
+          <p data-i18n="faq3_a">Não. Você escolhe o que faz sentido: pode começar com frota e CRM, por exemplo, e adicionar o resto depois.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq4_q">Os dados ficam seguros?</summary>
+          <p data-i18n="faq4_a">Sim. Utilizamos infraestrutura em nuvem com backups e boas práticas de segurança.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq5_q">Há suporte em português?</summary>
+          <p data-i18n="faq5_a">Sim. Todo o suporte é em português, por WhatsApp e e-mail.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta-section animate-on-scroll">
+      <h2 data-i18n="cta_title">Pronto para simplificar sua gestão?</h2>
+      <p data-i18n="cta_text">Preencha o formulário ou fale direto no WhatsApp.</p>
+      <div class="cta-buttons">
+        <a href="#contato" class="btn" style="background:white; color:var(--uniserv-blue);" data-i18n="cta_form">Preencher formulário</a>
+        <a href="https://wa.me/5591991863535?text=Olá! Vi o site do UNISERV e gostaria de saber mais sobre o sistema." class="btn btn-whatsapp" data-i18n="cta_whatsapp">Falar no WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Trust badges (Monday/ClickUp style) -->
+  <div class="trust-badges">
+    <span class="trust-badge" data-i18n="trust1">✓ Demonstração gratuita</span>
+    <span class="trust-badge" data-i18n="trust2">✓ Suporte em português</span>
+    <span class="trust-badge" data-i18n="trust3">✓ Sem compromisso</span>
+    <span class="trust-badge" data-i18n="trust4">✓ Dados no Brasil</span>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4 data-i18n="footer_produto">Produto</h4>
+        <ul>
+          <li><a href="#funcionalidades" data-i18n="nav_features">Funcionalidades</a></li>
+          <li><a href="#solucoes" data-i18n="nav_solutions">Soluções</a></li>
+          <li><a href="#contato" data-i18n="nav_plans">Planos</a></li>
+          <li><a href="#como-funciona" data-i18n="nav_how">Como funciona</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_suporte">Suporte</h4>
+        <ul>
+          <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+          <li><a href="#contato" data-i18n="footer_contato">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_contato">Contato</h4>
+        <ul>
+          <li><a href="mailto:rlconsultoriaexecutiva@gmail.com" data-i18n="footer_email">E-mail</a></li>
+          <li><a href="https://wa.me/5591991863535">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>© 2025 UNISERV — <span data-i18n="footer_copy">O único sistema de serviço.</span></p>
+    <div class="footer-contact">
+      <a href="mailto:rlconsultoriaexecutiva@gmail.com">rlconsultoriaexecutiva@gmail.com</a>
+      <a href="https://wa.me/5591991863535">(91) 99186-3535</a>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (LGPD) -->
+  <div id="cookieBanner" class="cookie-banner">
+    <p><span data-i18n="cookie_text">🍪 Utilizamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa política de privacidade.</span></p>
+    <div class="cookie-btns">
+      <button id="cookieDecline" class="cookie-btn cookie-decline">Recusar</button>
+      <button id="cookieAccept" class="cookie-btn cookie-accept">Aceitar</button>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    function toggleMenu() {
+      mobileNav.classList.toggle('open');
+      mobileOverlay.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    }
+
+    if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
+    if (mobileOverlay) mobileOverlay.addEventListener('click', toggleMenu);
+
+    document.querySelectorAll('.nav-close').forEach(function(link) {
+      link.addEventListener('click', toggleMenu);
+    });
+
+    // Accordion Dores
+    document.querySelectorAll('[data-dores] .dores-trigger').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.dores-item');
+        item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', item.classList.contains('open'));
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // Cookie banner
+    var cookieBanner = document.getElementById('cookieBanner');
+    var cookieAccept = document.getElementById('cookieAccept');
+    var cookieDecline = document.getElementById('cookieDecline');
+    if (cookieBanner && localStorage.getItem('uniserv-cookies')) {
+      cookieBanner.classList.add('hidden');
+    }
+    if (cookieAccept) cookieAccept.addEventListener('click', function() {
+      localStorage.setItem('uniserv-cookies', 'accepted');
+      cookieBanner.classList.add('hidden');
+    });
+    if (cookieDecline) cookieDecline.addEventListener('click', function() {
+      localStorage.setItem('uniserv-cookies', 'declined');
+      cookieBanner.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
