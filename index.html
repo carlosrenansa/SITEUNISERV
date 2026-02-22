@@ -1197,11 +1197,7 @@
       <h2 data-i18n="form_title">Converse comigo</h2>
       <p class="form-desc" data-i18n="form_desc">Preencha o formulário e eu te respondo rapidinho no WhatsApp ou por e-mail.</p>
       <p class="form-cta" style="text-align:center;font-weight:600;color:var(--uniserv-blue);margin-bottom:1.5rem;font-size:1rem;"><span data-i18n="form_cta">Agende uma consultoria gratuita de 15 min para mapear seu processo.</span></p>
-      <form class="lead-form" action="https://formsubmit.co/rlconsultoriaexecutiva@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="Novo lead UNISERV - Site">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="obrigado.html">
-        <input type="text" name="_honey" style="display:none">
+      <form class="lead-form" id="leadForm" method="post" novalidate>
         <label for="nome" data-i18n="form_name">Nome completo *</label>
         <input type="text" id="nome" name="name" required data-i18n-placeholder="form_name_ph" placeholder="Seu nome">
         <label for="email" data-i18n="form_email">E-mail *</label>
@@ -1560,6 +1556,33 @@
         btn.setAttribute('aria-expanded', item.classList.contains('open'));
       });
     });
+
+    // Formulário: envia os dados para o WhatsApp (não envia por e-mail)
+    var leadForm = document.getElementById('leadForm');
+    if (leadForm) {
+      leadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var nome = (document.getElementById('nome') && document.getElementById('nome').value) || '';
+        var email = (document.getElementById('email') && document.getElementById('email').value) || '';
+        var telefone = (document.getElementById('telefone') && document.getElementById('telefone').value) || '';
+        var empresa = (document.getElementById('empresa') && document.getElementById('empresa').value) || '';
+        var interesse = (document.getElementById('interesse') && document.getElementById('interesse').value) || '';
+        var mensagem = (document.getElementById('mensagem') && document.getElementById('mensagem').value) || '';
+        if (!nome.trim() || !email.trim() || !telefone.trim()) {
+          leadForm.reportValidity();
+          return;
+        }
+        var texto = 'Novo lead UNISERV - Site\n\n';
+        texto += 'Nome: ' + nome + '\n';
+        texto += 'E-mail: ' + email + '\n';
+        texto += 'Telefone/WhatsApp: ' + telefone + '\n';
+        texto += 'Empresa: ' + empresa + '\n';
+        texto += 'Interesse: ' + interesse + '\n';
+        if (mensagem.trim()) texto += 'Mensagem: ' + mensagem;
+        var url = 'https://wa.me/5591991863535?text=' + encodeURIComponent(texto);
+        window.open(url, '_blank', 'noopener');
+      });
+    }
 
     // Auto-scroll suave nos carrosséis (apenas para frente, sem voltar ao início)
     function autoScrollCarousel(selector) {
