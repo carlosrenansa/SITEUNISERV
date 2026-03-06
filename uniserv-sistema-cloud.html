@@ -659,16 +659,16 @@
     <div class="contact-form">
       <div class="form-title">Converse comigo</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" for="nome">Nome completo</label><input type="text" id="nome" name="nome" class="form-input" placeholder="Seu nome" required></div>
-        <div class="form-group"><label class="form-label" for="email">E-mail</label><input type="email" id="email" name="email" class="form-input" placeholder="seu@email.com" required></div>
+        <div class="form-group"><label class="form-label">Nome completo</label><input type="text" class="form-input" placeholder="Seu nome"></div>
+        <div class="form-group"><label class="form-label">E-mail</label><input type="email" class="form-input" placeholder="seu@email.com"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label" for="telefone">Telefone / WhatsApp</label><input type="tel" id="telefone" name="telefone" class="form-input" placeholder="(91) 99186-3535" required></div>
-        <div class="form-group"><label class="form-label" for="empresa">Nome da empresa</label><input type="text" id="empresa" name="empresa" class="form-input" placeholder="Sua empresa"></div>
+        <div class="form-group"><label class="form-label">Telefone / WhatsApp</label><input type="tel" class="form-input" placeholder="(91) 99186-3535"></div>
+        <div class="form-group"><label class="form-label">Nome da empresa</label><input type="text" class="form-input" placeholder="Sua empresa"></div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="interesse">Principal interesse?</label>
-        <select class="form-select" id="interesse" name="interesse">
+        <label class="form-label">Principal interesse?</label>
+        <select class="form-select">
           <option value="">Selecione...</option>
           <option>Controle de Demandas</option>
           <option>Gestão Financeira (DRE/DFC)</option>
@@ -680,7 +680,7 @@
           <option>Sistema completo</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label" for="mensagem">Mensagem (opcional)</label><textarea id="mensagem" name="mensagem" class="form-textarea" placeholder="Conte um pouco sobre sua necessidade..."></textarea></div>
+      <div class="form-group"><label class="form-label">Mensagem (opcional)</label><textarea class="form-textarea" placeholder="Conte um pouco sobre sua necessidade..."></textarea></div>
       <button class="btn-form" onclick="sendWhatsApp()"><span>💬</span> Enviar e falar no WhatsApp</button>
     </div>
   </div>
@@ -733,7 +733,7 @@
     <ul>
       <li><a href="mailto:rlconsultoriaexecutiva@gmail.com">rlconsultoriaexecutiva@gmail.com</a></li>
       <li><a href="https://wa.me/5591991863535" target="_blank">(91) 99186-3535</a></li>
-      <li><a href="https://www.instagram.com/uniservsistemas?igsh=MTh2b2JjZ3F6cWJycA%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
       <li><a href="http://www.uniservsistemas.com.br" target="_blank">uniservsistemas.com.br</a></li>
     </ul>
   </div>
@@ -758,25 +758,11 @@
   }
 
   function sendWhatsApp() {
-    const nome = (document.getElementById('nome') && document.getElementById('nome').value) || '';
-    const email = (document.getElementById('email') && document.getElementById('email').value) || '';
-    const telefone = (document.getElementById('telefone') && document.getElementById('telefone').value) || '';
-    const empresa = (document.getElementById('empresa') && document.getElementById('empresa').value) || '';
-    const interesse = (document.getElementById('interesse') && document.getElementById('interesse').value) || '';
-    const mensagem = (document.getElementById('mensagem') && document.getElementById('mensagem').value) || '';
-    if (!nome.trim() || !email.trim() || !telefone.trim()) {
-      var el = document.getElementById('nome') || document.getElementById('email') || document.getElementById('telefone');
-      if (el && el.reportValidity) el.reportValidity();
-      return;
-    }
-    let texto = 'Novo lead UNISERV - Site\n\n';
-    texto += 'Nome: ' + nome + '\n';
-    texto += 'E-mail: ' + email + '\n';
-    texto += 'Telefone/WhatsApp: ' + telefone + '\n';
-    texto += 'Empresa: ' + empresa + '\n';
-    texto += 'Interesse: ' + interesse + '\n';
-    if (mensagem.trim()) texto += 'Mensagem: ' + mensagem;
-    window.open('https://wa.me/5591991863535?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+    const nome = document.querySelector('input[placeholder="Seu nome"]').value;
+    const empresa = document.querySelector('input[placeholder="Sua empresa"]').value;
+    const interesse = document.querySelector('.form-select').value;
+    const msg = encodeURIComponent(`Olá Renan! Me chamo ${nome || 'visitante'}, da empresa ${empresa || 'não informada'}. Interesse: ${interesse || 'UNISERV completo'}. Quero agendar uma demo!`);
+    window.open(`https://wa.me/5591991863535?text=${msg}`, '_blank');
   }
 </script>
 </body>
