@@ -209,6 +209,13 @@
   .feat-icon-wrap { width: 48px; height: 48px; border-radius: 12px; background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
   .feat-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: 0.3px; margin-bottom: 10px; }
   .feat-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .module-category { background: var(--navy2); padding: 28px 24px; transition: background 0.25s; position: relative; overflow: hidden; }
+  .module-category::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: linear-gradient(180deg, var(--red-bright) 0%, var(--blue-glow) 100%); transition: height 0.3s ease; }
+  .module-category:hover { background: rgba(37,99,235,0.06); }
+  .module-category:hover::before { height: 100%; }
+  .module-category h3 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.3px; color: var(--off-white); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .module-category .module-list { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+  .module-category .module-list span { font-size: 12px; color: var(--muted); background: rgba(255,255,255,0.06); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); }
 
   /* ── SCREENS SHOWCASE ── */
   .showcase-section {
@@ -241,20 +248,13 @@
   .sc-body img { width: 100%; display: block; }
   .sc-label { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; padding: 12px 16px; border-top: 1px solid var(--border); letter-spacing: 0.5px; }
 
-  /* ── COMPARISON ── */
-  .comparison-section { padding: 110px 60px; }
-  .comp-table { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); margin-top: 56px; }
-  .comp-head-row { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; background: rgba(255,255,255,0.04); border-bottom: 1px solid var(--border); padding: 18px 28px; }
-  .ch-cell { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); font-family: 'Rajdhani', sans-serif; }
-  .ch-cell.hl { color: var(--blue-glow); }
-  .comp-data-row { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; padding: 18px 28px; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: center; transition: background 0.15s; }
-  .comp-data-row:hover { background: rgba(255,255,255,0.02); }
-  .comp-data-row:last-child { border-bottom: none; }
-  .cdr-name { font-size: 15px; font-weight: 500; color: var(--off-white); }
-  .cdr-check { color: #34d399; font-size: 18px; }
-  .cdr-cross { color: rgba(255,255,255,0.15); font-size: 18px; }
-  .cdr-partial { font-size: 12px; color: #fbbf24; font-weight: 600; }
-  .cdr-price { color: var(--blue-glow); font-weight: 700; font-family: 'Rajdhani'; font-size: 17px; }
+  /* ── VIDEO DEMO ── */
+  .video-section { padding: 100px 60px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); }
+  .video-section .video-header { text-align: center; margin-bottom: 48px; }
+  .video-section .video-header .section-sub { max-width: 520px; margin: 12px auto 0; }
+  .video-wrap { max-width: 920px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(37,99,235,0.3); box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 40px rgba(37,99,235,0.1); }
+  .video-wrap-inner { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: var(--navy2); }
+  .video-wrap-inner iframe, .video-wrap-inner video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
   /* ── HOW ── */
   .how-section { padding: 100px 60px; background: rgba(0,0,0,0.15); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -374,7 +374,8 @@
   <ul class="nav-links">
     <li><a href="#features">Funcionalidades</a></li>
     <li><a href="#screens">Telas</a></li>
-    <li><a href="#planos">Planos</a></li>
+    <li><a href="#video">Vídeo</a></li>
+    <li><a href="#planos">Investimento</a></li>
     <li><a href="#como-funciona">Como funciona</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contato">Fale comigo</a></li>
@@ -465,15 +466,75 @@
       <div class="eyebrow">Funcionalidades</div>
       <div class="section-title">9 módulos integrados.<br>Uma única plataforma.</div>
     </div>
-    <p class="section-sub">Do Kanban ao financeiro, da gamificação ao mapa mental — o UNISERV elimina a necessidade de múltiplas ferramentas para equipes de serviço.</p>
+    <p class="section-sub">Mais de 50 recursos integrados — sem precisar de vários sistemas diferentes.</p>
   </div>
   <div class="features-grid">
-    <div class="feat-card"><div class="feat-icon-wrap">📋</div><div class="feat-title">Kanban & Múltiplas Visões</div><p class="feat-desc">Kanban, Lista, Potiche, Timeline, Calendário e Mapa Mental. Cada colaborador vê o trabalho do jeito que prefere.</p></div>
-    <div class="feat-card"><div class="feat-icon-wrap">⏱️</div><div class="feat-title">Controle de Tempo</div><p class="feat-desc">Cronômetro nativo por tarefa, histórico de movimentações e relatórios de custo real por serviço e demanda.</p></div>
-    <div class="feat-card"><div class="feat-icon-wrap">💰</div><div class="feat-title">Financeiro Completo</div><p class="feat-desc">DRE, DFC, agenda financeira, importação OFX, controle patrimonial e indicadores como ROA, ROE e margem operacional.</p></div>
-    <div class="feat-card"><div class="feat-icon-wrap">🚗</div><div class="feat-title">Gestão de Frota</div><p class="feat-desc">Abastecimento, manutenção, documentos, multas, controle de pneus e lucro por veículo — tudo integrado ao financeiro.</p></div>
-    <div class="feat-card"><div class="feat-icon-wrap">🏆</div><div class="feat-title">Gamificação</div><p class="feat-desc">Arena dos Campeões com ranking em tempo real. Equipe engajada e produtividade mensurável de forma transparente.</p></div>
-    <div class="feat-card"><div class="feat-icon-wrap">💬</div><div class="feat-title">UniChat + WhatsApp</div><p class="feat-desc">Chat interno integrado ao WhatsApp. Toda comunicação da equipe centralizada e vinculada às demandas — sem WhatsApp pessoal.</p></div>
+    <article class="module-category">
+      <h3>📋 Cadastros Gerais</h3>
+      <div class="module-list">
+        <span>Contratados</span><span>Contratantes</span><span>Filiais</span><span>Responsáveis</span><span>Tipos de serviço</span><span>Serviço</span><span>Demanda</span><span>Dados financeiros</span><span>Controle e geração de contratos</span><span>Competências</span><span>Veículos e máquinas</span><span>Equipamentos</span><span>Rotas</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>💰 Financeiro</h3>
+      <div class="module-list">
+        <span>Movimentação financeira</span><span>Agenda de despesas e receitas</span><span>DFC (fluxo de caixa)</span><span>DRE</span><span>Controle patrimonial</span><span>Importação OFX</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>🚗 Gestão de Frota</h3>
+      <div class="module-list">
+        <span>Abastecimento</span><span>Check-in/Check-out</span><span>Documentação de veículos</span><span>Multas e sinistros</span><span>Manutenção e OS</span><span>Controle de aluguel de veículos e máquinas</span><span>Controle de pneu</span><span>Lucro por veículo</span><span>Monitoramento de rota</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>📊 CRM</h3>
+      <div class="module-list">
+        <span>Dashboard</span><span>Prospects</span><span>Pipeline</span><span>Interações</span><span>Orçamentos</span><span>NPS</span><span>Configurações</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>🏗️ Obras</h3>
+      <div class="module-list">
+        <span>Execução e OS</span><span>Dashboard</span><span>Segurança do trabalho</span><span>Planejamento e execução</span><span>Materiais em obra</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>📦 Almoxarifado</h3>
+      <div class="module-list">
+        <span>Cadastros</span><span>Produtos</span><span>Movimentações</span><span>Requisições de compra</span><span>Curva ABC</span><span>Controle de validade</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>👥 Serviços e Operação</h3>
+      <div class="module-list">
+        <span>Controle de demanda</span><span>Demandas do cliente</span><span>Gamificação</span><span>UniChat (chat interno)</span><span>Integração WhatsApp</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>🎯 Desempenho e Competências</h3>
+      <div class="module-list">
+        <span>Prognóstico</span><span>Desempenho de funcionários</span><span>Ata de reunião</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>👔 Departamento Pessoal</h3>
+      <div class="module-list">
+        <span>Ponto eletrônico</span><span>Gestão de colaboradores</span><span>Departamento pessoal</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>📚 Uniteca e Unimovie</h3>
+      <div class="module-list">
+        <span>Universidade corporativa</span><span>Biblioteca de vídeos</span><span>Videoaulas</span>
+      </div>
+    </article>
+    <article class="module-category">
+      <h3>⚙️ Administração</h3>
+      <div class="module-list">
+        <span>Permissões</span><span>Parâmetros</span><span>Configurações</span>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -534,28 +595,19 @@
   </div>
 </section>
 
-<!-- COMPARISON -->
-<section class="comparison-section reveal z1" style="background:rgba(0,0,0,0.15);border-top:1px solid var(--border)">
-  <div class="eyebrow">Comparativo</div>
-  <div class="section-title">UNISERV vs. concorrentes</div>
-  <p class="section-sub" style="max-width:560px">Por que times de serviço escolhem o UNISERV em vez de Trello e Runrun.it.</p>
-  <div class="comp-table">
-    <div class="comp-head-row">
-      <div class="ch-cell">Funcionalidade</div>
-      <div class="ch-cell hl">⚡ UNISERV</div>
-      <div class="ch-cell">Trello</div>
-      <div class="ch-cell">Runrun.it</div>
+<!-- VÍDEO DO SISTEMA -->
+<section class="video-section reveal z1" id="video">
+  <div class="video-header">
+    <div class="eyebrow">Demonstração</div>
+    <div class="section-title">Veja o UNISERV em ação</div>
+    <p class="section-sub">Um tour rápido pelo sistema para você sentir na prática como tudo fica integrado.</p>
+  </div>
+  <div class="video-wrap">
+    <div class="video-wrap-inner">
+      <!-- YouTube: substitua VIDEO_ID pelo ID do seu vídeo (ex: dQw4w9WgXcQ) -->
+      <!-- Vimeo: use src="https://player.vimeo.com/video/VIDEO_ID" -->
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID?rel=0" title="Demonstração UNISERV" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="comp-data-row"><div class="cdr-name">Kanban & múltiplas visões</div><div class="cdr-check">✓</div><div class="cdr-check">✓</div><div class="cdr-check">✓</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Controle de tempo nativo</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-check">✓</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Gestão financeira integrada (DRE)</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Gestão de Frota</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Gamificação com ranking</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Gestão de Obras</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Almoxarifado</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Departamento Pessoal + Ponto</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-cross">—</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Interface 100% em Português BR</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-check">✓</div></div>
-    <div class="comp-data-row"><div class="cdr-name">Suporte nacional dedicado</div><div class="cdr-check">✓</div><div class="cdr-cross">—</div><div class="cdr-partial">Parcial</div></div>
   </div>
 </section>
 
@@ -573,43 +625,14 @@
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- INVESTIMENTO (sem preços fixos) -->
 <section class="pricing-section reveal z1" id="planos">
-  <div class="eyebrow">Planos</div>
-  <div class="section-title">Planos exclusivos para empresas de serviços</div>
-  <p class="section-sub" style="max-width:580px;margin:0 auto">Com o UNISERV você centraliza frota, CRM, obras, financeiro e RH em um só lugar.</p>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="pc-plan">Starter</div>
-      <div class="pc-desc">Para equipes pequenas começando a se organizar</div>
-      <div class="pc-price">R$0</div>
-      <div class="pc-period">gratuito para sempre</div>
-      <ul class="pc-features">
-        <li>Até 3 contratos</li><li>5 usuários</li><li>Kanban & Lista</li><li>Dashboard básico</li>
-      </ul>
-      <button class="pc-btn pc-btn-border">Começar Grátis</button>
-    </div>
-    <div class="price-card featured">
-      <div class="pc-badge">Mais Popular</div>
-      <div class="pc-plan" style="color:var(--blue-glow)">Profissional</div>
-      <div class="pc-desc">Para empresas que precisam do sistema completo</div>
-      <div class="pc-price">R$49</div>
-      <div class="pc-period">por usuário / mês</div>
-      <ul class="pc-features">
-        <li>Contratos ilimitados</li><li>Usuários ilimitados</li><li>Todos os 9 módulos</li><li>Financeiro & DRE</li><li>Gamificação completa</li><li>Suporte prioritário</li>
-      </ul>
-      <button class="pc-btn pc-btn-fill">Testar 14 dias grátis</button>
-    </div>
-    <div class="price-card">
-      <div class="pc-plan">Enterprise</div>
-      <div class="pc-desc">Para grandes operações com requisitos específicos</div>
-      <div class="pc-price" style="font-size:28px;margin-top:12px">Sob consulta</div>
-      <div class="pc-period">contrato anual</div>
-      <ul class="pc-features">
-        <li>Tudo do Profissional</li><li>SSO / Active Directory</li><li>SLA contratual</li><li>Gerente de sucesso</li><li>Customizações sob demanda</li>
-      </ul>
-      <button class="pc-btn pc-btn-red">Falar com Consultor</button>
-    </div>
+  <div class="eyebrow">Investimento</div>
+  <div class="section-title">Solução sob medida para sua empresa</div>
+  <p class="section-sub" style="max-width:620px;margin:0 auto 32px">Com o UNISERV você centraliza frota, CRM, obras, financeiro e RH em um só lugar. Cada operação é única — por isso oferecemos <strong style="color:var(--off-white)">implantação</strong> e <strong style="color:var(--off-white)">mensalidade</strong> adaptadas ao tamanho e à necessidade do seu negócio.</p>
+  <p class="section-sub" style="max-width:520px;margin:0 auto;font-size:15px;color:var(--muted)">Converse comigo sem compromisso. Mapeamos sua realidade e montamos uma proposta que faça sentido para você.</p>
+  <div style="margin-top:36px">
+    <a href="#contato" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none">Quero uma proposta</a>
   </div>
 </section>
 
@@ -715,7 +738,8 @@
     <ul>
       <li><a href="#features">Funcionalidades</a></li>
       <li><a href="#screens">Telas do sistema</a></li>
-      <li><a href="#planos">Planos</a></li>
+      <li><a href="#video">Vídeo</a></li>
+      <li><a href="#planos">Investimento</a></li>
       <li><a href="#como-funciona">Como funciona</a></li>
     </ul>
   </div>
