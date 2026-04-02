@@ -50,7 +50,7 @@
     border-bottom: 1px solid var(--border);
   }
   .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .nav-logo-img { height: 36px; width: auto; filter: brightness(1.1); }
+  .nav-logo-img { height: 38px; width: 38px; object-fit: contain; filter: none; border-radius: 50%; }
   .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; }
   .nav-links a:hover { color: var(--white); }
@@ -184,16 +184,25 @@
   .fs-left { bottom: -40px; left: -60px; width: 280px; animation-delay: 0s; }
   .fs-right { top: 40px; right: -60px; width: 260px; animation-delay: 2s; }
 
-  /* ── LOGOS ── */
-  .logos-bar {
-    padding: 36px 64px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 48px;
-    position: relative; z-index: 1; overflow: hidden;
+  /* ── PUBLICO ALVO ── */
+  .audience-section {
+    padding: 48px 64px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+    background: rgba(0,0,0,0.12);
   }
-  .logos-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); white-space: nowrap; }
-  .logos-track { display: flex; gap: 64px; align-items: center; animation: logoScroll 22s linear infinite; }
-  @keyframes logoScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  .logo-item { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 1px; color: rgba(255,255,255,0.2); white-space: nowrap; }
+  .audience-header { max-width: 1100px; margin: 0 auto 28px; }
+  .audience-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: clamp(28px,3.2vw,42px); line-height: 1.1; margin-bottom: 10px; }
+  .audience-sub { color: var(--muted); font-size: 15px; max-width: 880px; }
+  .audience-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .audience-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .audience-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 20px; margin-bottom: 10px; }
+  .audience-card p { font-size: 13px; color: var(--off-white); line-height: 1.6; margin-bottom: 8px; }
+  .audience-card p span { color: var(--muted); font-weight: 700; letter-spacing: 0.3px; }
+  .audience-extra { max-width: 1100px; margin: 18px auto 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .audience-chip { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; background: rgba(255,255,255,0.03); }
 
   /* ── FEATURES ── */
   .features-section { padding: 110px 60px; }
@@ -291,7 +300,8 @@
   /* ── WHO ── */
   .who-section { padding: 90px 60px; background: rgba(0,0,0,0.15); border-top: 1px solid var(--border); }
   .who-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 60px; align-items: center; }
-  .who-photo { width: 180px; height: 180px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.5); box-shadow: 0 0 40px rgba(37,99,235,0.25); overflow: hidden; flex-shrink: 0; background: var(--navy3); display: flex; align-items: center; justify-content: center; font-family: 'Rajdhani'; font-size: 56px; font-weight: 700; }
+  .who-photo { width: 180px; height: 180px; border-radius: 50%; border: 3px solid rgba(37,99,235,0.5); box-shadow: 0 0 40px rgba(37,99,235,0.25); overflow: hidden; flex-shrink: 0; background: var(--navy3); }
+  .who-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .who-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: 1px; margin-bottom: 4px; }
   .who-role { font-size: 14px; color: var(--blue-glow); font-weight: 600; margin-bottom: 20px; }
   .who-text { font-size: 15px; color: var(--muted); line-height: 1.75; }
@@ -349,7 +359,7 @@
 
   /* ── FOOTER ── */
   footer { padding: 64px 60px 40px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; position: relative; z-index: 1; }
-  .footer-logo-img { height: 36px; width: auto; margin-bottom: 16px; }
+  .footer-logo-img { height: 56px; width: 56px; object-fit: contain; border-radius: 50%; margin-bottom: 16px; }
   .footer-tagline { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; max-width: 240px; }
   .footer-email a { color: var(--blue-glow); text-decoration: none; font-size: 13px; }
   .fcol h4 { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--off-white); margin-bottom: 18px; }
@@ -441,23 +451,49 @@
 </section>
 
 <!-- LOGOS -->
-<div class="logos-bar reveal z1">
-  <span class="logos-label">Usado por</span>
-  <div style="flex:1;overflow:hidden">
-    <div class="logos-track">
-      <span class="logo-item">AUDITORIA EXECUTIVA</span>
-      <span class="logo-item">AGÊNCIA DE MARKETING</span>
-      <span class="logo-item">GRUPO EXECUTIVA</span>
-      <span class="logo-item">EXECUTIVA SERVIÇOS</span>
-      <span class="logo-item">CONTRATO OBRA 01</span>
-      <span class="logo-item">CIPTE</span>
-      <span class="logo-item">AUDITORIA EXECUTIVA</span>
-      <span class="logo-item">AGÊNCIA DE MARKETING</span>
-      <span class="logo-item">GRUPO EXECUTIVA</span>
-      <span class="logo-item">EXECUTIVA SERVIÇOS</span>
-    </div>
+<section class="audience-section reveal z1" id="publico-alvo">
+  <div class="audience-header">
+    <div class="eyebrow">Publico-alvo</div>
+    <div class="audience-title">O UNISERV foi desenhado para quem presta servicos, gerencia contratos e opera com equipes em campo.</div>
+    <p class="audience-sub">Os tres segmentos com maior potencial de conversao estao abaixo, com argumento comercial direto para acelerar venda.</p>
   </div>
-</div>
+  <div class="audience-grid">
+    <article class="audience-card">
+      <h4>Segmento 1 - Pequenas Empresas de Servicos (1-20 funcionarios)</h4>
+      <p><span>Dor:</span> tudo no WhatsApp e planilha, sem clareza de lucro por contrato.</p>
+      <p><span>Argumento:</span> "Chega de WhatsApp para gerenciar servico. Tenha controle real do seu negocio por menos de um salario minimo por mes."</p>
+      <p><span>Canais:</span> Instagram (Reels), Google Search, WhatsApp (indicacao).</p>
+      <p><span>Exemplos:</span> manutencao eletrica/hidraulica, dedetizacao, limpeza, TI, seguranca patrimonial.</p>
+    </article>
+    <article class="audience-card">
+      <h4>Segmento 2 - Prestadoras de Servico / Terceirizadas</h4>
+      <p><span>Dor:</span> muitos clientes e filiais, demandas perdidas e equipe dificil de controlar.</p>
+      <p><span>Argumento:</span> "Gerencie 10, 20, 50 contratos simultaneos sem perder demanda. Cliente sempre atendido e equipe alinhada."</p>
+      <p><span>Canais:</span> LinkedIn (organico), Google Search, indicacao ativa.</p>
+      <p><span>Exemplos:</span> limpeza, vigilancia, manutencao predial, coleta de residuos.</p>
+    </article>
+    <article class="audience-card">
+      <h4>Segmento 3 - Construtoras e Empresas de Obra</h4>
+      <p><span>Dor:</span> obra sem controle, materiais desaparecendo e relatorio manual.</p>
+      <p><span>Argumento:</span> "A equipe registra execucao no celular, mesmo sem internet. Relatorio de obra em PDF com 1 clique."</p>
+      <p><span>Canais:</span> YouTube (tutorial), Instagram (demo mobile), Google Search.</p>
+      <p><span>Exemplos:</span> construtoras de pequeno porte, iluminacao publica, instaladoras eletricas.</p>
+    </article>
+  </div>
+  <p class="audience-sub" style="max-width:1100px;margin:16px auto 10px"><strong style="color:var(--off-white)">Outros segmentos com alto potencial:</strong></p>
+  <div class="audience-extra">
+    <span class="audience-chip">Transportadoras e empresas com frota propria</span>
+    <span class="audience-chip">Escritorios de contabilidade e consultoria</span>
+    <span class="audience-chip">Empresas de facilities e gestao predial</span>
+    <span class="audience-chip">Prestadoras de servico industrial</span>
+    <span class="audience-chip">Empresas de tecnologia com equipe em campo</span>
+    <span class="audience-chip">Energia solar e instalacoes tecnicas</span>
+    <span class="audience-chip">Assistencia tecnica e pos-venda externo</span>
+    <span class="audience-chip">Franquias de servico e operacao multiunidade</span>
+    <span class="audience-chip">Saneamento, coleta e servicos urbanos</span>
+    <span class="audience-chip">Saude domiciliar e atendimento em campo</span>
+  </div>
+</section>
 
 <!-- FEATURES -->
 <section class="features-section reveal z1" id="features">
@@ -639,7 +675,7 @@
 <!-- WHO -->
 <section class="who-section reveal z1">
   <div class="who-inner">
-    <div class="who-photo">R</div>
+    <div class="who-photo"><img src="IMAGENS/foto%20renan%20fundo%20azul.png" alt="Renan"></div>
     <div>
       <div class="who-name">Renan — Grupo Executiva</div>
       <div class="who-role">Apresentador do UNISERV · Investimentos & Gestão Estratégica</div>
@@ -774,6 +810,13 @@
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Troca a logo base64 pelo símbolo oficial da empresa
+  const logoPath = 'assets/simbolo-uniserv.png';
+  document.querySelectorAll('.nav-logo-img, .footer-logo-img').forEach((img) => {
+    img.src = logoPath;
+    img.alt = 'UNISERV';
+  });
 
   function toggleFaq(item) {
     const isOpen = item.classList.contains('open');
