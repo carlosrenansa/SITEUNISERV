@@ -23,6 +23,7 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
+  section { scroll-margin-top: 96px; }
   body {
     background: var(--navy);
     color: var(--white);
@@ -52,6 +53,7 @@
   .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
   .nav-logo-img { height: 38px; width: 38px; object-fit: contain; filter: none; border-radius: 50%; }
   .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
   .nav-links a { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; transition: color 0.2s; }
   .nav-links a:hover { color: var(--white); }
   .nav-flags { display: flex; gap: 8px; font-size: 18px; }
@@ -65,6 +67,7 @@
     box-shadow: 0 3px 16px rgba(185,28,28,0.4); transition: all 0.2s;
   }
   .btn-nav:hover { box-shadow: 0 6px 24px rgba(185,28,28,0.6); transform: translateY(-1px); }
+  img { max-width: 100%; height: auto; }
 
   /* ── UTILS ── */
   .z1 { position: relative; z-index: 1; }
@@ -413,6 +416,127 @@
   .footer-bottom a { color: var(--muted); text-decoration: none; }
   .footer-bottom a:hover { color: var(--white); }
 
+  @media (max-width: 1200px) {
+    nav { padding: 12px 28px; }
+    .nav-links { gap: 18px; }
+    .hero,
+    .features-section,
+    .showcase-section,
+    .how-section,
+    .pricing-section,
+    .who-section,
+    .faq-section,
+    .contact-section,
+    .cta-section,
+    .audience-section,
+    .app-section { padding-left: 28px; padding-right: 28px; }
+    footer { padding-left: 28px; padding-right: 28px; gap: 32px; }
+    .footer-bottom { padding-left: 28px; padding-right: 28px; }
+    .features-header { grid-template-columns: 1fr; gap: 24px; align-items: start; margin-bottom: 34px; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 620px; }
+  }
+
+  @media (max-width: 992px) {
+    nav { flex-wrap: wrap; row-gap: 10px; }
+    .nav-links {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      gap: 14px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 4px;
+    }
+    .hero { padding-top: 140px; min-height: auto; }
+    .nav-right { margin-left: auto; }
+    .nav-flags { font-size: 16px; }
+    .hero-btns { flex-direction: column; width: 100%; }
+    .hero-btns .btn-primary,
+    .hero-btns .btn-wpp { width: min(420px, 100%); justify-content: center; }
+    .hero-stats { gap: 26px; flex-wrap: wrap; }
+    .fs-left, .fs-right { display: none; }
+    .screens-main { border-radius: 12px; }
+    .section-title { line-height: 1.08; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .how-steps { grid-template-columns: 1fr; gap: 28px; }
+    .how-steps::before { display: none; }
+    .who-inner { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+    .who-photo { margin: 0 auto; }
+    .who-contact { justify-content: center; flex-wrap: wrap; }
+    .contact-inner { grid-template-columns: 1fr; gap: 30px; }
+    .cta-section::before { width: 560px; height: 280px; }
+    .video-wrap { border-radius: 12px; }
+    footer { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding-top: 132px; padding-bottom: 54px; }
+    .hero-sub { font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
+    .hero-tagline { letter-spacing: 2px; font-size: 12px; }
+    .hero-badge { font-size: 11px; letter-spacing: 1px; }
+    .hero-stats { margin-top: 34px; padding-top: 26px; }
+    .stat-num { font-size: 28px; }
+    .audience-title { font-size: clamp(24px, 8vw, 34px); }
+    .features-grid { grid-template-columns: 1fr; }
+    .feat-card { padding: 28px 22px; }
+    .module-category h3 { font-size: 16px; }
+    .module-category { padding: 22px 18px; }
+    .showcase-grid { grid-template-columns: 1fr; }
+    .showcase-card img { aspect-ratio: 16 / 10; object-fit: cover; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .who-photo { width: 148px; height: 148px; }
+    .who-contact { gap: 8px; }
+    .who-link { padding: 9px 14px; font-size: 12px; }
+    .cp-item { padding: 14px; }
+    .cta-section::before { width: 420px; height: 220px; }
+    footer { grid-template-columns: 1fr; gap: 22px; }
+    .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }
+
+  @media (max-width: 560px) {
+    nav { padding: 10px 14px; }
+    .hero,
+    .features-section,
+    .showcase-section,
+    .how-section,
+    .pricing-section,
+    .who-section,
+    .faq-section,
+    .contact-section,
+    .cta-section,
+    .audience-section,
+    .app-section { padding-left: 14px; padding-right: 14px; }
+    .nav-brand { gap: 8px; }
+    .nav-logo-img { width: 32px; height: 32px; }
+    .section-sub { font-size: 14px; line-height: 1.6; }
+    .btn-primary, .btn-wpp, .btn-nav { font-size: 13px; padding: 14px 18px; }
+    .nav-flags { font-size: 15px; gap: 6px; }
+    .nav-links a { font-size: 12px; }
+    .nav-right { gap: 8px; }
+    .nav-flags { display: none; }
+    .btn-nav { padding: 10px 12px; font-size: 12px; letter-spacing: 0.6px; }
+    .hero h1 { letter-spacing: 1px; }
+    .hero-badge { width: 100%; justify-content: center; }
+    .hero-tagline { letter-spacing: 1px; }
+    .hero-stats { gap: 14px; }
+    .stat-num { font-size: 24px; }
+    .audience-card { padding: 14px; }
+    .audience-card h4 { font-size: 18px; }
+    .audience-sub[style] { font-size: 16px !important; }
+    .sc-label { font-size: 12px; padding: 10px 12px; }
+    .video-section .section-sub[style],
+    .pricing-section .section-sub[style] { font-size: 14px !important; }
+    .contact-form { padding: 24px 16px; }
+    .app-card { max-width: 290px; }
+    .audience-chip { font-size: 12px; }
+    footer { padding-left: 14px; padding-right: 14px; }
+    .footer-bottom { padding-left: 14px; padding-right: 14px; }
+  }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
@@ -433,7 +557,7 @@
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contato">Fale comigo</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:16px">
+  <div class="nav-right">
     <div class="nav-flags">
       <span class="nav-flag active">🇧🇷</span>
       <span class="nav-flag">🇺🇸</span>
