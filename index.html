@@ -190,23 +190,50 @@
 
   /* ── PUBLICO ALVO ── */
   .audience-section {
-    padding: 48px 64px;
+    padding: 88px 60px 100px;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     position: relative;
     z-index: 1;
     background: rgba(0,0,0,0.12);
   }
-  .audience-header { max-width: 1100px; margin: 0 auto 28px; }
-  .audience-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: clamp(28px,3.2vw,42px); line-height: 1.1; margin-bottom: 10px; }
-  .audience-sub { color: var(--muted); font-size: 15px; max-width: 880px; }
-  .audience-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .audience-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
-  .audience-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 20px; margin-bottom: 10px; }
-  .audience-card p { font-size: 13px; color: var(--off-white); line-height: 1.6; margin-bottom: 8px; }
-  .audience-card p span { color: var(--muted); font-weight: 700; letter-spacing: 0.3px; }
-  .audience-extra { max-width: 1100px; margin: 18px auto 0; display: flex; flex-wrap: wrap; gap: 10px; padding: 16px; border: 1px solid rgba(37,99,235,0.28); border-radius: 14px; background: linear-gradient(180deg, rgba(37,99,235,0.08) 0%, rgba(255,255,255,0.02) 100%); box-shadow: 0 0 30px rgba(37,99,235,0.08) inset; }
-  .audience-chip { font-size: 13px; color: var(--off-white); border: 1px solid rgba(37,99,235,0.35); border-radius: 999px; padding: 8px 12px; background: rgba(10,22,40,0.75); font-weight: 700; letter-spacing: 0.2px; }
+  .audience-header {
+    max-width: 1100px;
+    margin: 0 auto 52px;
+    text-align: center;
+  }
+  .audience-header .section-title {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    text-align: center;
+  }
+  .audience-header .section-title-icon { margin-right: 0; flex-shrink: 0; }
+  .audience-header .section-sub { max-width: 640px; margin: 0 auto; }
+  .audience-groups { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+  .audience-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: stretch; }
+  .audience-row--wide { grid-template-columns: 1fr; }
+  .audience-group-card {
+    background: var(--navy2); border: 1px solid var(--border); border-radius: 14px; padding: 18px 18px 16px;
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .audience-group-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.35px;
+    color: var(--off-white); line-height: 1.25; margin: 0 0 12px;
+    padding-bottom: 10px; border-bottom: 1px solid rgba(37,99,235,0.22);
+  }
+  .audience-group-list {
+    margin: 0; padding-left: 18px; font-size: 12px; color: var(--muted); line-height: 1.55;
+    list-style-position: outside;
+  }
+  .audience-group-list li { margin-bottom: 5px; padding-left: 2px; break-inside: avoid; }
+  .audience-row--wide .audience-group-list {
+    columns: 2; column-gap: 32px; padding-left: 20px;
+  }
+  .audience-row--wide .audience-group-title { font-size: 15px; }
 
 
   /* ── APP SECTION ── */
@@ -444,7 +471,7 @@
     .footer-bottom { padding-left: 28px; padding-right: 28px; }
     .features-header { grid-template-columns: 1fr; gap: 24px; align-items: start; margin-bottom: 34px; }
     .features-grid { grid-template-columns: repeat(2, 1fr); }
-    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .audience-row { grid-template-columns: repeat(2, 1fr); }
     .showcase-grid { grid-template-columns: repeat(2, 1fr); }
     .pricing-grid { grid-template-columns: 1fr; max-width: 620px; }
   }
@@ -470,7 +497,8 @@
     .fs-left, .fs-right { display: none; }
     .screens-main { border-radius: 12px; }
     .section-title { line-height: 1.08; }
-    .audience-grid { grid-template-columns: 1fr; }
+    .audience-row { grid-template-columns: 1fr; }
+    .audience-row--wide .audience-group-list { columns: 1; }
     .how-steps { grid-template-columns: 1fr; gap: 28px; }
     .how-steps::before { display: none; }
     .who-inner { grid-template-columns: 1fr; gap: 24px; text-align: center; }
@@ -489,7 +517,6 @@
     .hero-badge { font-size: 11px; letter-spacing: 1px; }
     .hero-stats { margin-top: 34px; padding-top: 26px; }
     .stat-num { font-size: 28px; }
-    .audience-title { font-size: clamp(24px, 8vw, 34px); }
     .features-grid { grid-template-columns: 1fr; }
     .feat-card { padding: 28px 22px; }
     .module-category h3 { font-size: 16px; }
@@ -534,15 +561,14 @@
     .hero-tagline { letter-spacing: 1px; }
     .hero-stats { gap: 14px; }
     .stat-num { font-size: 24px; }
-    .audience-card { padding: 14px; }
-    .audience-card h4 { font-size: 18px; }
-    .audience-sub[style] { font-size: 16px !important; }
+    .audience-group-card { padding: 14px 14px 12px; }
+    .audience-group-title { font-size: 13px; }
+    .audience-group-list { font-size: 11px; }
     .sc-label { font-size: 12px; padding: 10px 12px; }
     .video-section .section-sub[style],
     .pricing-section .section-sub[style] { font-size: 14px !important; }
     .contact-form { padding: 24px 16px; }
     .app-card { max-width: 290px; }
-    .audience-chip { font-size: 12px; }
     footer { padding-left: 14px; padding-right: 14px; }
     .footer-bottom { padding-left: 14px; padding-right: 14px; }
   }
@@ -630,52 +656,157 @@
 <!-- LOGOS -->
 <section class="audience-section reveal z1" id="publico-alvo">
   <div class="audience-header">
-    <div class="eyebrow">Publico-alvo</div>
-    <div class="audience-title">O UNISERV foi desenhado para quem presta servicos, gerencia contratos e opera com equipes em campo.</div>
-    <p class="audience-sub">Os tres segmentos com maior potencial de conversao estao abaixo, com argumento comercial direto para acelerar venda.</p>
+    <div class="eyebrow">Público-alvo</div>
+    <div class="section-title"><img src="assets/simbolo-uniserv.png" alt="UNISERV" class="section-title-icon">Público-alvo do UNISERV</div>
+    <p class="section-sub">Empresas que vivem de serviço, contrato e operação em campo — com equipes no terreno, frota, obras, estoque ou consultoria com operação. Abaixo, nove grupos para você localizar o seu negócio com clareza.</p>
   </div>
-  <div class="audience-grid">
-    <article class="audience-card">
-      <h4>Segmento 1 - Pequenas Empresas de Servicos (1-20 funcionarios)</h4>
-      <p><span>Dor:</span> tudo no WhatsApp e planilha, sem clareza de lucro por contrato.</p>
-      <p><span>Solução:</span> "Chega de WhatsApp para gerenciar servico. Tenha controle real do seu negocio por menos de um salario minimo por mes."</p>
-            <p><span>Exemplos:</span> manutencao eletrica/hidraulica, dedetizacao, limpeza, TI, seguranca patrimonial.</p>
+  <div class="audience-groups">
+  <div class="audience-row">
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 1 — EMPRESAS COM EQUIPE EM CAMPO</h4>
+      <ol class="audience-group-list">
+        <li>Manutenção elétrica predial</li>
+        <li>Manutenção hidráulica predial</li>
+        <li>Manutenção de ar-condicionado</li>
+        <li>Manutenção predial terceirizada</li>
+        <li>Empresas de facilities</li>
+        <li>Empresas de limpeza empresarial recorrente</li>
+        <li>Empresas de dedetização</li>
+        <li>Empresas de segurança patrimonial</li>
+        <li>Empresas de portaria terceirizada</li>
+        <li>Empresas de jardinagem corporativa</li>
+        <li>Empresas de conservação urbana</li>
+        <li>Empresas de manutenção industrial</li>
+        <li>Empresas de inspeção técnica</li>
+        <li>Empresas de assistência técnica (equipamentos)</li>
+        <li>Empresas de instalação (energia solar, internet, câmeras)</li>
+      </ol>
     </article>
-    <article class="audience-card">
-      <h4>Segmento 2 - Prestadoras de Servico / Terceirizadas</h4>
-      <p><span>Dor:</span> muitos clientes e filiais, demandas perdidas e equipe dificil de controlar.</p>
-      <p><span>Solução:</span> "Gerencie 10, 20, 50 contratos simultaneos sem perder demanda. Cliente sempre atendido e equipe alinhada."</p>
-            <p><span>Exemplos:</span> limpeza, vigilancia, manutencao predial, coleta de residuos.</p>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 2 — EMPRESAS COM CONTRATOS RECORRENTES</h4>
+      <ol class="audience-group-list">
+        <li>Terceirização de mão de obra</li>
+        <li>Empresas de limpeza com contratos mensais</li>
+        <li>Segurança privada contratual</li>
+        <li>Manutenção predial por contrato</li>
+        <li>Empresas de TI com suporte mensal</li>
+        <li>Empresas de suporte técnico recorrente</li>
+        <li>Empresas de outsourcing</li>
+        <li>Gestão de condomínios</li>
+        <li>Administradoras de serviços terceirizados</li>
+        <li>Empresas de facilities corporativo</li>
+      </ol>
     </article>
-    <article class="audience-card">
-      <h4>Segmento 3 - Construtoras e Empresas de Obra</h4>
-      <p><span>Dor:</span> obra sem controle, materiais desaparecendo e relatorio manual.</p>
-      <p><span>Solução:</span> "A equipe registra execucao no celular, mesmo sem internet. Relatorio de obra em PDF com 1 clique."</p>
-            <p><span>Exemplos:</span> construtoras de pequeno porte, iluminacao publica, instaladoras eletricas.</p>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 3 — EMPRESAS COM FROTA OPERACIONAL</h4>
+      <ol class="audience-group-list">
+        <li>Transportadoras</li>
+        <li>Empresas de logística urbana</li>
+        <li>Distribuidoras com frota própria</li>
+        <li>Empresas de entrega (last mile)</li>
+        <li>Fretamento corporativo</li>
+        <li>Empresas de coleta de resíduos</li>
+        <li>Empresas de manutenção com veículos próprios</li>
+        <li>Empresas agrícolas com frota</li>
+        <li>Locadoras de veículos operacionais</li>
+        <li>Empresas de serviços com técnicos motorizados</li>
+      </ol>
+    </article>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 4 — CONSTRUÇÃO E EXECUÇÃO DE OBRAS</h4>
+      <ol class="audience-group-list">
+        <li>Construtoras pequenas e médias</li>
+        <li>Empreiteiras</li>
+        <li>Instaladoras elétricas</li>
+        <li>Empresas de obras públicas terceirizadas</li>
+        <li>Empresas de manutenção urbana</li>
+        <li>Empresas de pavimentação</li>
+        <li>Empresas de infraestrutura</li>
+        <li>Empresas de saneamento</li>
+        <li>Empresas de montagem industrial</li>
+        <li>Empresas de reformas corporativas</li>
+      </ol>
     </article>
   </div>
-  <p class="audience-sub" style="max-width:1100px;margin:18px auto 10px;font-size:18px;font-weight:800;color:var(--off-white);letter-spacing:0.3px">Outros segmentos com alto potencial:</p>
-  <div class="audience-extra">
-    <span class="audience-chip">Transportadoras e empresas com frota propria</span>
-    <span class="audience-chip">Escritorios de contabilidade e consultoria</span>
-    <span class="audience-chip">Empresas de facilities e gestao predial</span>
-    <span class="audience-chip">Prestadoras de servico industrial</span>
-    <span class="audience-chip">Empresas de tecnologia com equipe em campo</span>
-    <span class="audience-chip">Energia solar e instalacoes tecnicas</span>
-    <span class="audience-chip">Assistencia tecnica e pos-venda externo</span>
-    <span class="audience-chip">Franquias de servico e operacao multiunidade</span>
-    <span class="audience-chip">Saneamento, coleta e servicos urbanos</span>
-    <span class="audience-chip">Saude domiciliar e atendimento em campo</span>
-    <span class="audience-chip">Empresas de internet e telecom (field service)</span>
-    <span class="audience-chip">Instaladoras de CFTV, alarmes e controle de acesso</span>
-    <span class="audience-chip">Ar-condicionado, refrigeracao e manutencao HVAC</span>
-    <span class="audience-chip">Elevadores e manutencao tecnica especializada</span>
-    <span class="audience-chip">Locacao de maquinas e equipamentos</span>
-    <span class="audience-chip">Servicos automotivos com equipe externa</span>
-    <span class="audience-chip">Cooperativas de servicos e operacao regional</span>
-    <span class="audience-chip">Empresas de paisagismo e manutencao de areas</span>
-    <span class="audience-chip">Condominios e administradoras com equipe tecnica</span>
-    <span class="audience-chip">BPO operacional e backoffice com atendimento em campo</span>
+  <div class="audience-row">
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 5 — EMPRESAS COM ESTOQUE OPERACIONAL</h4>
+      <ol class="audience-group-list">
+        <li>Empresas de manutenção com peças</li>
+        <li>Empresas de refrigeração</li>
+        <li>Empresas de instalação técnica</li>
+        <li>Assistência técnica com estoque</li>
+        <li>Empresas industriais com almoxarifado interno</li>
+        <li>Empresas de obras com controle de material</li>
+        <li>Empresas de manutenção de máquinas</li>
+        <li>Empresas de automação industrial</li>
+      </ol>
+    </article>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 6 — EMPRESAS DE SERVIÇOS TÉCNICOS ESPECIALIZADOS</h4>
+      <ol class="audience-group-list">
+        <li>Engenharia consultiva + execução</li>
+        <li>Empresas de inspeção e laudos técnicos</li>
+        <li>Empresas de segurança do trabalho</li>
+        <li>Empresas de projetos técnicos com execução</li>
+        <li>Empresas de energia (instalação e manutenção)</li>
+        <li>Empresas de telecom com campo</li>
+        <li>Empresas de automação</li>
+      </ol>
+    </article>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 7 — CONSULTIVOS COM OPERAÇÃO</h4>
+      <ol class="audience-group-list">
+        <li>Consultorias com equipe externa</li>
+        <li>Empresas de auditoria com operação em campo</li>
+        <li>Consultorias industriais</li>
+        <li>Consultorias operacionais</li>
+        <li>Empresas de implantação de sistemas</li>
+        <li>Empresas de treinamento in company com operação</li>
+        <li>Consultorias agrícolas com campo</li>
+      </ol>
+    </article>
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 8 — AGRONEGÓCIO OPERACIONAL</h4>
+      <ol class="audience-group-list">
+        <li>Fazendas com equipe operacional</li>
+        <li>Empresas de plantio</li>
+        <li>Empresas de colheita</li>
+        <li>Empresas de manejo agrícola</li>
+        <li>Prestadores de serviço rural</li>
+        <li>Cooperativas com operação</li>
+        <li>Agroindústrias com campo</li>
+        <li>Empresas de irrigação</li>
+        <li>Empresas de pulverização</li>
+      </ol>
+    </article>
+  </div>
+  <div class="audience-row audience-row--wide">
+    <article class="audience-group-card">
+      <h4 class="audience-group-title">GRUPO 9 — EMPRESAS PRESTADORAS DE SERVIÇO</h4>
+      <ol class="audience-group-list">
+        <li>Escritórios de contabilidade</li>
+        <li>Escritórios de advocacia empresarial</li>
+        <li>Consultorias empresariais</li>
+        <li>Consultores financeiros</li>
+        <li>Consultores de gestão</li>
+        <li>Consultorias de RH</li>
+        <li>Consultorias estratégicas</li>
+        <li>Empresas de auditoria</li>
+        <li>Escritórios de engenharia consultiva</li>
+        <li>Escritórios de arquitetura</li>
+        <li>Empresas de TI (consultoria e suporte)</li>
+        <li>Empresas de implantação de sistemas</li>
+        <li>Agências de marketing</li>
+        <li>Agências de publicidade</li>
+        <li>Social media (empresas estruturadas)</li>
+        <li>Produtoras de conteúdo</li>
+        <li>Empresas de branding</li>
+        <li>Empresas de tráfego pago</li>
+        <li>Empresas de design</li>
+      </ol>
+    </article>
+  </div>
   </div>
 </section>
 
