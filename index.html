@@ -259,7 +259,14 @@
   .app-header { max-width: 1100px; margin: 0 auto 36px; text-align: center; }
   .app-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
   .app-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-  .app-card img { width: 100%; display: block; aspect-ratio: 9 / 19.5; object-fit: cover; }
+  .app-card img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 583 / 1024;
+    object-fit: contain;
+    object-position: center top;
+    background: var(--navy2);
+  }
   .app-card span { display: block; padding: 10px 12px; font-size: 12px; color: var(--off-white); font-family: 'Rajdhani', sans-serif; letter-spacing: 0.4px; }
   .app-swipe-hint { display: none; }
 
