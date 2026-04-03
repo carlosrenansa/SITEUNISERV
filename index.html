@@ -217,23 +217,41 @@
   .audience-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: stretch; }
   .audience-row--wide { grid-template-columns: 1fr; }
   .audience-group-card {
-    background: var(--navy2); border: 1px solid var(--border); border-radius: 14px; padding: 18px 18px 16px;
+    background: var(--navy3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px 20px 18px;
     display: flex; flex-direction: column; min-height: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
   }
   .audience-group-title {
-    font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.35px;
-    color: var(--off-white); line-height: 1.25; margin: 0 0 12px;
-    padding-bottom: 10px; border-bottom: 1px solid rgba(37,99,235,0.22);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.45px;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.3;
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
   .audience-group-list {
-    margin: 0; padding-left: 18px; font-size: 12px; color: var(--muted); line-height: 1.55;
+    margin: 0;
+    padding-left: 20px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(219,228,240,0.78);
+    line-height: 1.6;
     list-style-position: outside;
   }
-  .audience-group-list li { margin-bottom: 5px; padding-left: 2px; break-inside: avoid; }
+  .audience-group-list li { margin-bottom: 6px; padding-left: 4px; break-inside: avoid; }
+  .audience-group-list li::marker { color: rgba(148,163,184,0.85); font-weight: 600; }
   .audience-row--wide .audience-group-list {
     columns: 2; column-gap: 32px; padding-left: 20px;
   }
-  .audience-row--wide .audience-group-title { font-size: 15px; }
+  .audience-row--wide .audience-group-title { font-size: 14px; }
 
 
   /* ── APP SECTION ── */
@@ -561,9 +579,9 @@
     .hero-tagline { letter-spacing: 1px; }
     .hero-stats { gap: 14px; }
     .stat-num { font-size: 24px; }
-    .audience-group-card { padding: 14px 14px 12px; }
-    .audience-group-title { font-size: 13px; }
-    .audience-group-list { font-size: 11px; }
+    .audience-group-card { padding: 16px 16px 14px; }
+    .audience-group-title { font-size: 12px; letter-spacing: 0.35px; }
+    .audience-group-list { font-size: 12px; }
     .sc-label { font-size: 12px; padding: 10px 12px; }
     .video-section .section-sub[style],
     .pricing-section .section-sub[style] { font-size: 14px !important; }
