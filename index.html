@@ -262,7 +262,7 @@
   .app-card img {
     width: 100%;
     display: block;
-    aspect-ratio: 583 / 1024;
+    aspect-ratio: 472 / 1024;
     object-fit: contain;
     object-position: center top;
     background: var(--navy2);
@@ -360,7 +360,14 @@
   .sc-topbar { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.2); }
   .sc-dot { width: 8px; height: 8px; border-radius: 50%; }
   .sc-body { padding: 0; }
-  .sc-body img { width: 100%; display: block; }
+  .sc-body img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1024 / 532;
+    object-fit: contain;
+    object-position: center top;
+    background: var(--navy2);
+  }
   .sc-label { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; padding: 12px 16px; border-top: 1px solid var(--border); letter-spacing: 0.5px; }
 
   /* ── VIDEO DEMO ── */
@@ -547,7 +554,6 @@
     .module-category h3 { font-size: 16px; }
     .module-category { padding: 22px 18px; }
     .showcase-grid { grid-template-columns: 1fr; }
-    .showcase-card img { aspect-ratio: 16 / 10; object-fit: cover; }
     .faq-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .who-photo { width: 148px; height: 148px; }
@@ -977,7 +983,7 @@
   <div class="app-header">
     <div class="eyebrow">Aplicativo</div>
     <div class="section-title">UNISERV no celular, direto na operacao</div>
-    <p class="section-sub">Sua equipe registra, executa e acompanha tudo em campo com praticidade: login, módulos, frota, check-in, almoxarifado e obras.</p>
+    <p class="section-sub">Sua equipe registra, executa e acompanha tudo em campo com praticidade: login, módulos, frota, check-in, abastecimento e obras.</p>
     <p class="app-swipe-hint">↔ Arraste para o lado</p>
   </div>
   <div class="app-grid">
@@ -985,7 +991,7 @@
     <div class="app-card"><img src="assets/app-modulos.png" alt="App UNISERV — Módulos" loading="lazy"><span>Tela de módulos</span></div>
     <div class="app-card"><img src="assets/app-frota.png" alt="App UNISERV — Frota" loading="lazy"><span>Frota — menu e rotinas</span></div>
     <div class="app-card"><img src="assets/app-frota-checkin.png" alt="App UNISERV — Check-in e check-out" loading="lazy"><span>Check-in / check-out</span></div>
-    <div class="app-card"><img src="assets/app-almoxarifado.png" alt="App UNISERV — Almoxarifado" loading="lazy"><span>Almoxarifado mobile</span></div>
+    <div class="app-card"><img src="assets/app-abastecimento.png" alt="App UNISERV — Abastecimento" loading="lazy"><span>Abastecimento em campo</span></div>
     <div class="app-card"><img src="assets/app-obra.png" alt="App UNISERV — Obra" loading="lazy"><span>Obra em campo</span></div>
   </div>
 </section>
